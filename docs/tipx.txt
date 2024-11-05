@@ -1,0 +1,28 @@
+Development Tips for POSTERGENIUS24
+
+- **Using cross-env, open local host3000 in chrome on any device**:
+    - What it does: Allows you to set environment settings that work on any computer.
+    - How to install: Run npm install cross-env --save-dev in the terminal.
+
+
+- **Open localhost3000 in Chrome**:
+    - What it does: Automatically opens your app in Google Chrome when you run it.
+    - How to set it up: Change the script in package.json to "dev": "cross-env BROWSER=chrome next dev".
+
+
+- **Creating a Next.js App**:
+    - What it does: Quickly sets up a new Next.js project.
+    - How to do it: Use the command npx create-next-app@latest [your-project-name] --typescript.
+
+
+- **Understanding Project Files**:
+    - node_modules: This folder has all the tools (packages) your app needs to work.
+    - pages: Contains the different pages of your app. Each file here represents a part of your website (like the homepage).
+    - public: Holds images and icons that can be used in your app.
+    - package.json: A list of everything your app needs to run and scripts to start your app.
+
+
+- **Managing Port 3000 on Windows**:
+
+- **run Development server**
+    npm run dev
