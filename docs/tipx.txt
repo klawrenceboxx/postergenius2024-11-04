@@ -23,6 +23,33 @@ Development Tips for POSTERGENIUS24
 
 
 - **Managing Port 3000 on Windows**:
+    lists processes on port 3000: "netstat -ano | findstr :3000"
+    stops the process with a PID: "taskkill /PID 1234 /F"
+    makes sure no process ir running: "netstat -ano | findstr :3000"
+
 
 - **run Development server**
     npm run dev
+
+
+- **setting up github**
+    - git init
+    - git add .
+    - git commit -m "Initial commit"
+    - git remote add origin https://github.com/klawrenceboxx/postergenius2024-11-04.git
+    - git push -u origian master
+
+
+- **adding prettier**
+    to install use "npm i --save-dev --save-exact  prettier"
+    this will make sure that whatever version of prettier you install, it stays that way, so that if they update prettier it doesnt update your code base as well
+    go settings > text editor > default formatter > set this to prettier - code formatter
+    search up "formatonsave" in settings and make sure the box is checked
+
+
+-**plugin causes hydration error**
+    my video speed controller will cause a hydration error in my development server
+
+
+-**global css**
+    affects all the components in the documents
