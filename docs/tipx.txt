@@ -53,3 +53,48 @@ Development Tips for POSTERGENIUS24
 
 -**global css**
     affects all the components in the documents
+
+
+-**project structure**
+    favicon - the icon displayed for the browser tab of our website
+    fonts - contains fonts used in our application
+        the fonts are referenced in layout.tsx
+
+
+**react components**
+    in Next.js 15 (which is what this project uses) react components are server components by default
+    server components cannot handle state or interactivity
+    if you want to turn a component (server component by default) into a client component (which can use state and or interactivity) add '"use client";' at the top of the pages
+    client components are rendered in the browser, but can also be intiitally rendered in HTML once, on the server allowing for SEO, better UX and improved percieved performance. You can check the console for either or like console log, or the vscode terminal
+    Optimization: the goal is to use server components as much as possible, and only use client components when you need interactivity
+        server comopnents: fetching data, accessing backened resources, keeping sensitive information on server
+        client components: interactivity and event listeneners, using hooks like useState or useEffect, using browser-only APIs
+
+
+**Routing**
+    all routes must be placed inside the app folder
+    every file that representes a route should be named page.js or page.tsx
+    every folder corresponds to a path segment in the browser URL. e.g., an 'about' folder inside the app folder will correspond to url/about.com
+        as long as you have a page file in the about folder
+    the page.tsx file in the app folder corresponds to the root route in your applicatoin (website url followed by '/', e.g., postergenius/.com)
+    nested
+
+
+**Advanced routing**
+    nested routes work great for blog posts, but not eccomerce stores: folder inside of a folder inside of a folder e.g., url/about/blog/first-post
+    dyanimc routes - create a folder within a folder in square brackets with the name 'id' e.g., app/products/[id]/page.tsx
+        any route that tails the product segment will render the same page e.g., product/iphone has the same page contents as product/macbook
+        however, you can pass down the url id like props
+        page component automatically receives route parameters as a prop, which you can destrucutre of type params of type object with id of type string
+    dynamic apis have been made asynchronous - params is one of them
+
+
+
+questions: figure out how the 'head' section works for discoverability
+**core features**
+
+Lecture thumbnail
+0:11 / 14:14
+
+Lecture thumbnail
+0:01 / 14:14
