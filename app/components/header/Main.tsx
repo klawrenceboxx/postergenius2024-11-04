@@ -23,7 +23,7 @@ const Main: React.FC = () => {
             height={30} // Adjust to fit your design
             className="rounded-lg" // Rounded edges without a full circle
           />
-          <span className="text-2xl font-bold text-grey font-poppins">
+          <span className="text-2xl font-bold text-black font-poppins">
             PosterGenius
           </span>
         </Link>

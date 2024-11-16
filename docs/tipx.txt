@@ -89,6 +89,82 @@ Development Tips for POSTERGENIUS24
     dynamic apis have been made asynchronous - params is one of them
 
 
+**redux toolkit**
+    1. install dependencies - npm install @reduxjs/toolkit react-redux redux redux-thunk redux-persist redux-devtools-extension next-redux-wrapper
+    create store folder - Create a store folder in the root of your project. Inside this folder, create a store.ts file.
+    2. create a store.ts file - 
+    3. create a cartSlice.js file - 
+    4. update the layout.tsx file - 
+
+    /app
+        layout.tsx          // Wraps the app with StoreProvider
+        page.tsx            // Example Home Page
+        StoreProvider.tsx   // Provides the Redux store
+    /lib
+        store.ts            // Configures the Redux store
+        hooks.ts            // Typed hooks for Redux
+        /features
+            cartSlice.ts    // Defines cart state and actions
+
+
+**Fetch**
+    fetch returns a Response object, not actual JSON data, so we can't console log it without first parsing the Response
+
+    you need to understand how the data is structured in order to correctly access it
+
+    fetch → await → response → data
+
+    app directory (new App Router):
+        doesn't support getServerSideProps
+        
+        uses async server components or explicitly call APIs (e.g., in fetch) for server-side rendierng
+
+        everything in teh app directory is inherently server-first unless explicitly marked as a client component
+
+
+**Typescript**
+    1. What TypeScript cares about
+    
+    Variables: What type of data a variable can hold.
+    Functions: What types of arguments a function takes and what it returns.
+    Objects: What properties an object has and their types.
+    Promises: Ensuring the type of data a promise resolves to matches what you expect.
+
+    two types in Typescript 
+        (1) primitive types: number, string, boolean, etc 
+        (2) custom types: interfaces or type aliases - types you define to describe complex structures like objects, arrays, or API responses
+       
+        e.g., interface ApiResponse {
+                id: number;
+                name: string;
+                email: string;
+                }
+
+
+**React Functions**
+    What Other React Functions Exist?
+    React functions can be divided into two categories:
+
+    1. React Core Functions:
+    useState: Manages local state.
+    useEffect: Runs side effects after rendering.
+    useContext: Shares data globally without prop drilling.
+    useReducer: Manages complex state logic.
+    useRef: Maintains a mutable reference to a DOM element or variable.
+    useMemo: Optimizes performance by memoizing a calculation.
+    useCallback: Memoizes a function to prevent unnecessary re-creation.
+
+    2. React Lifecycle Methods (Class Components):
+    componentDidMount: Called after a component is rendered.
+    componentDidUpdate: Called after a component updates.
+    componentWillUnmount: Called before a component is removed.
+
+    3. Next.js-Specific Functions:
+    getServerSideProps: Fetch data at request time for SSR.
+    getStaticProps: Fetch data at build time for static generation.
+    getStaticPaths: Define dynamic routes for static generation.
+    useRouter: Access routing information on the client.
+
 
 questions: figure out how the 'head' section works for discoverability
 **core features**
