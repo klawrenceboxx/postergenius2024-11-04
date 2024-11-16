@@ -2,6 +2,8 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import Ad from "./components/header/Ad";
 import Top from "./components/header/Top";
+import Main from "./components/header/Main";
+import Footer from "./components/footer/index";
 
 const Home: React.FC = () => {
   return (
@@ -9,6 +11,8 @@ const Home: React.FC = () => {
     <div>
       <Ad />
       <Top />
+      <Main />
+      <Footer />
     </div>
   );
 };
