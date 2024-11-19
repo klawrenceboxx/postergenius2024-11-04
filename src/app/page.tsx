@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import Header from "../components/header/index";
 import Footer from "../components/footer/index";
@@ -51,27 +51,27 @@ const fetchCountry = async (): Promise<countryData> => {
 
 const Home = async () => {
   const country = await fetchCountry();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
-  if (session) {
-    return (
-      <div>
-        <Header country={country} />
-        <p className="text-lg font-semibold text-gray-700">
-          Signed in as {session.user?.email} <br />
-          <button onClick={() => signOut()}>Sign out</button>
-          Country: {country.name}
-        </p>
-        <Footer country={country} />
-      </div>
-    );
-  }
+  // if (session) {
   return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
+    <div>
+      <Header country={country} />
+      <p className="text-lg font-semibold text-gray-700">
+        {/* Signed in as {session.user?.email} <br /> */}
+        {/* <button onClick={() => signOut()}>Sign out</button> */}
+        Country: {country.name}
+      </p>
+      <Footer country={country} />
+    </div>
   );
 };
+// return (
+//   <>
+//     Not signed in <br />
+//     <button onClick={() => signIn()}>Sign in</button>
+//   </>
+// );
+// };
 
 export default Home;

@@ -166,6 +166,10 @@ Development Tips for POSTERGENIUS24
     useRouter: Access routing information on the client.
 
 
+**file entries**
+    src/app/layout.tsx: Acts as your app-wide layout wrapper
+    src/app/page.tsx: Acts as your app's home page
+
 questions: figure out how the 'head' section works for discoverability
 **core features**
 

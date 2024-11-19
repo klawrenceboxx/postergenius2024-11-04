@@ -1,1 +1,5 @@
 1. add feature that let's you reposition your profile icon
+
+2. turn on responsiveness when ready
+
+3. review footer video again and add country to footer
