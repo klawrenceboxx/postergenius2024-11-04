@@ -7,7 +7,7 @@ import { MdSecurity } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { RiAccountCircleLine, RiArrowDropDownLine } from "react-icons/ri";
 import UserMenu from "./UserMenu"; // Import the UserMenu component
-import { countryData } from "../../page"; // Adjust path as needed
+import { countryData } from "../../app/page"; // Adjust path as needed
 
 type HeaderProps = {
   country: countryData;

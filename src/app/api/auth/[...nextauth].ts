@@ -1,3 +1,5 @@
+//src/app/api/auth/[...nextauth].ts
+
 import NextAuth, { NextAuthOptions } from "next-auth";
 import AppleProvider from "next-auth/providers/apple";
 import FacebookProvider from "next-auth/providers/facebook";

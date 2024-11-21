@@ -1,7 +1,7 @@
 import Ad from "./Ad";
 import Main from "./Main";
 import Top from "./Top";
-import { countryData } from "../../page"; // Adjust path as needed
+import { countryData } from "../../app/page"; // Adjust path as needed
 
 type HeaderProps = {
   country: countryData;
