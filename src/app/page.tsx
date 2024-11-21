@@ -35,7 +35,7 @@ const fetchCountry = async (): Promise<countryData> => {
     };
 
     // Log the parsed JSON to the console
-    // console.log("IPRegistry Data:", data);
+    console.log("IPRegistry Data:", data);
 
     return countryData || "Unavailable";
   } catch (error) {
@@ -60,8 +60,7 @@ const Home = async () => {
       <p className="text-lg font-semibold text-gray-700">
         {/* Signed in as {session.user?.email} <br /> */}
         {/* <button onClick={() => signOut()}>Sign out</button> */}
-        {/* Country: {country.name} */}
-        country: Canada
+        Country: {country.name}
       </p>
       <Footer country={country} />
     </div>
