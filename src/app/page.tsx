@@ -2,6 +2,7 @@
 
 import Header from "../components/header/index";
 import Footer from "../components/footer/index";
+import Main from "@/components/home/main";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 // Server Component: Fetch data directly
@@ -62,6 +63,7 @@ const Home = async () => {
         {/* <button onClick={() => signOut()}>Sign out</button> */}
         Country: {country.name}
       </p>
+      <Main />
       <Footer country={country} />
     </div>
   );
