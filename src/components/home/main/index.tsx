@@ -1,5 +1,6 @@
 import React from "react";
 import MainSwiper from "./swiper";
+import Offers from "../offers";
 
 const Main: React.FC = () => {
   return (
@@ -21,7 +22,7 @@ const Main: React.FC = () => {
 
       {/* Offers (Third row, second column) */}
       <div className="bg-blue-50 col-start-2 col-end-3 row-start-3 row-end-4">
-        offers
+        <Offers />
       </div>
 
       {/* User (Right column, spanning second and third rows) */}
