@@ -6,7 +6,7 @@
 //   return (
 //     <>
 //       <Header country="canada" />
-//       <div>
+//       <div flex>
 //         <div>
 //           <div>
 //             <p>Get access to one of the best Eshopping services in the world</p>

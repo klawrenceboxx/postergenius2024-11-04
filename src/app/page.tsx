@@ -1,21 +1,19 @@
-// "use client";
+"use client";
 
 import Header from "../components/header/index";
 import Footer from "../components/footer/index";
 import Main from "@/components/home/main";
+import FlashDeals from "@/components/home/flashDeals";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
 
-// Server Component: Fetch data directly
-
-//custom type to satisfy Typescript. if you ever want to acquire more stuff from this api in the future, modify this type
-export type countryData = {
+export type CountryData = {
   name: string;
   region: string;
   city: string;
 };
 
-// Fetch the country data
-const fetchCountry = async (): Promise<countryData> => {
+const fetchCountry = async (): Promise<CountryData> => {
   try {
     const res = await fetch(
       "https://api.ipregistry.co/?key=ira_wz5qeU9B07BN0m65TypWKvD1ZA8cdl03KDbF",
@@ -27,32 +25,33 @@ const fetchCountry = async (): Promise<countryData> => {
     }
 
     const data = await res.json();
-
-    // Extract additional data
-    const countryData = await {
-      name: data.location.country.name,
-      region: data.location.region.name,
-      city: data.location.city,
+    return {
+      name: data.location?.country?.name || "Unavailable",
+      region: data.location?.region?.name || "Unavailable",
+      city: data.location?.city || "Unavailable",
     };
-
-    // Log the parsed JSON to the console
-    console.log("IPRegistry Data:", data);
-
-    return countryData || "Unavailable";
   } catch (error) {
     console.error("Error fetching country data:", error);
-
-    return {
-      name: "Unavailable",
-      region: "Unavailable",
-      city: "Unavailable",
-    };
+    return { name: "Unavailable", region: "Unavailable", city: "Unavailable" };
   }
 };
 
-const Home = async () => {
-  const country = await fetchCountry();
-  // const { data: session } = useSession();
+export default function Home() {
+  const [country, setCountry] = useState<CountryData>({
+    name: "Unavailable",
+    region: "Unavailable",
+    city: "Unavailable",
+  });
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const getCountry = async () => {
+      const fetchedCountry = await fetchCountry();
+      setCountry(fetchedCountry);
+    };
+    getCountry();
+  }, []);
 
   // if (session) {
   return (
@@ -63,11 +62,25 @@ const Home = async () => {
         {/* <button onClick={() => signOut()}>Sign out</button> */}
         Country: {country.name}
       </p>
+      {status === "loading" ? (
+        <p>Loading session...</p>
+      ) : session ? (
+        <>
+          <p>You are logged in as {session.user?.email}</p>
+          <button onClick={() => signOut()}>Sign out</button>
+        </>
+      ) : (
+        <>
+          <p>You are not logged in</p>
+          <button onClick={() => signIn()}>Sign in</button>
+        </>
+      )}
       <Main />
+      <FlashDeals />
       <Footer country={country} />
     </div>
   );
-};
+}
 // return (
 //   <>
 //     Not signed in <br />
@@ -75,5 +88,3 @@ const Home = async () => {
 //   </>
 // );
 // };
-
-export default Home;

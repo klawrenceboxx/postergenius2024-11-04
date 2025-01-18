@@ -22,16 +22,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  pageProps,
 }: Readonly<{
   children: React.ReactNode;
+  pageProps?: any; //Define specific types if needed
 }>) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Wrap the children with StoreProvider */}
-        <StoreProvider>{children}</StoreProvider>
+        <SessionProvider>
+          {/* Wrap the children with StoreProvider */}
+          <StoreProvider>{children}</StoreProvider>
+        </SessionProvider>
       </body>
     </html>
   );

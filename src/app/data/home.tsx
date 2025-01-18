@@ -221,3 +221,55 @@ export const menuArray = [
     images: [],
   },
 ];
+
+export const flashDealsArray = [
+  {
+    image: "/images/posters/flashdeal1.png",
+    price: 100,
+    discount: 50,
+    sold: 18,
+    link: "",
+  },
+  {
+    image: "/images/posters/flashdeal2.png",
+    price: 100,
+    discount: 50,
+    sold: 24,
+    link: "",
+  },
+  {
+    image: "/images/posters/flashdeal3.png",
+    price: 100,
+    discount: 50,
+    sold: 27,
+    link: "",
+  },
+  {
+    image: "/images/posters/flashdeal4.png",
+    price: 100,
+    discount: 50,
+    sold: 40,
+    link: "",
+  },
+  {
+    image: "/images/posters/flashdeal5.png",
+    price: 100,
+    discount: 50,
+    sold: 59,
+    link: "",
+  },
+  {
+    image: "/images/posters/flashdeal6.jpeg",
+    price: 100,
+    discount: 50,
+    sold: 59,
+    link: "",
+  },
+  {
+    image: "/images/posters/flashdeal7.jpeg",
+    price: 100,
+    discount: 50,
+    sold: 59,
+    link: "",
+  },
+];
