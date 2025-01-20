@@ -22,10 +22,11 @@ const Menu: React.FC = () => {
         <div className="mt-1">
           {/* styles.menu__list */}
           {menuArray.map((item, i) => (
-            <li className="px-4 h-8 flex items-center cursor-pointer text-slate-500 hover:bg-slate-100">
-              <Link key={item.name} href={item.link || "#"}>
-                {item.name}
-              </Link>
+            <li
+              key={item.name}
+              className="px-4 h-8 flex items-center cursor-pointer text-slate-500 hover:bg-slate-100"
+            >
+              <Link href={item.link || "#"}>{item.name}</Link>
             </li>
           ))}
         </div>

@@ -5,7 +5,7 @@ const User: React.FC = () => {
   return (
     <div className="">
       User
-      <img src="" alt="" />
+      {/* <img src="" alt="" /> */}
       {/* {
         session ? <div>
             <img src={session.user?.image} alt="" />

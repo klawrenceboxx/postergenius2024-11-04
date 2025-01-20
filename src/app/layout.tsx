@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { AuthProvider } from "./Providers";
+import { ReactNode } from "react";
 import StoreProvider from "./StoreProvider"; // Import the StoreProvider
 import { SessionProvider } from "next-auth/react";
 
@@ -24,7 +26,7 @@ export default function RootLayout({
   children,
   pageProps,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
   pageProps?: any; //Define specific types if needed
 }>) {
   return (
@@ -32,10 +34,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider>
-          {/* Wrap the children with StoreProvider */}
+        {/* Wrap the children with StoreProvider */}
+        <AuthProvider>
           <StoreProvider>{children}</StoreProvider>
-        </SessionProvider>
+        </AuthProvider>
       </body>
     </html>
   );

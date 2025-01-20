@@ -3,10 +3,14 @@ import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
+import Auth0Provider from "next-auth/providers/auth0";
 // import AppleProvider from "next-auth/providers/apple";
 // import EmailProvider from "next-auth/providers/email";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import clientPromise from "../lib/mongodb";
 
 export const options: NextAuthOptions = {
+  adapter: MongoDBAdapter(clientPromise),
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -19,6 +23,11 @@ export const options: NextAuthOptions = {
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID as string,
       clientSecret: process.env.FACEBOOK_SECRET as string,
+    }),
+    Auth0Provider({
+      clientId: process.env.AUTH0_CLIENT_ID as string,
+      clientSecret: process.env.AUTH0_CLIENT_SECRET as string,
+      issuer: process.env.AUTH0_ISSUER as string,
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -35,7 +44,7 @@ export const options: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        //This is where you need to retrieve user daya
+        //This is where you need to retrieve user data
         // to verify with credentials
         // Docs: Https://next-auth.js.org/configuration/providers/credentials
         const user = { id: "42", name: "Dave", password: "nextauth" };
@@ -52,27 +61,11 @@ export const options: NextAuthOptions = {
     }),
   ],
   pages: {
-    // SignIn: "/signin"
+    signIn: "/signin",
   },
+
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.JWT_SECRET,
 };
-
-// const options: NextAuthOptions = {
-//   providers: [
-//     // OAuth authentication providers
-//     AppleProvider({
-//       clientId: process.env.APPLE_ID || "",
-//       clientSecret: process.env.APPLE_SECRET || "",
-//     }),
-//     FacebookProvider({
-//       clientId: process.env.FACEBOOK_ID || "",
-//       clientSecret: process.env.FACEBOOK_SECRET || "",
-//     }),
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_ID || "",
-//       clientSecret: process.env.GOOGLE_SECRET || "",
-//     }),
-//     // Passwordless / email sign-in
-//   ],
-// };
-
-// export default NextAuth(options);

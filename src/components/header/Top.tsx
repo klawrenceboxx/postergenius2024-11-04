@@ -7,14 +7,15 @@ import { MdSecurity } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { RiAccountCircleLine, RiArrowDropDownLine } from "react-icons/ri";
 import UserMenu from "./UserMenu"; // Import the UserMenu component
-import { countryData } from "../../app/page"; // Adjust path as needed
+import { CountryData } from "../../app/page"; // Adjust path as needed
+import { useSession } from "next-auth/react";
 
 type HeaderProps = {
-  country: countryData;
+  country: CountryData;
 };
 
 const Top: React.FC<HeaderProps> = ({ country }) => {
-  const [loggedIn, setLoggedIn] = useState(true); // Set true or false to test logged-in state
+  const { data: session, status } = useSession();
   const [visible, setVisible] = useState(false); // State to control menu visibility
 
   return (
@@ -42,27 +43,37 @@ const Top: React.FC<HeaderProps> = ({ country }) => {
           </li>
           <li
             className="cursor-pointer hover:text-gray-800 relative"
-            onMouseOver={() => setVisible(true)} // Show menu on hover
+            onMouseEnter={() => setVisible(true)} // Show menu on hover
             onMouseLeave={() => setVisible(false)} // Hide menu when mouse leaves
           >
             <div className="flex items-center gap-1">
-              {loggedIn ? (
-                <Image
-                  src="/profile.jpg"
-                  alt="Profile Image"
-                  width={20} // adjust to fit your design
-                  height={20} // adjust to fit your design
-                  className="rounded-full"
-                />
+              {session ? (
+                <>
+                  <img
+                    src={session.user?.image || "/default-profile.png"}
+                    alt={`${session.user?.name || "User"}'s profile`}
+                    width={20} // adjust to fit your design
+                    height={20} // adjust to fit your design
+                    className="rounded-full"
+                  />
+                  <span>{session.user?.name || "Account"}</span>
+                </>
               ) : (
-                <RiAccountCircleLine className="text-xl" />
+                <>
+                  <RiAccountCircleLine className="text-xl" />
+                  <span>Account</span>
+                </>
               )}
-              <span>{loggedIn ? "Kaleel" : "Account"}</span>
+
               <RiArrowDropDownLine className="text-xl" />
             </div>
             {visible && (
-              <div className="absolute top-full right-0 mt-2">
-                <UserMenu loggedIn={loggedIn} />
+              <div
+                className="absolute top-full right-0 mt-0 z-10 bg-white shadow-lg rounded-md"
+                onMouseEnter={() => setVisible(true)} // Keep the menu visible
+                onMouseLeave={() => setVisible(false)} // Hide the menu when mouse leaves>
+              >
+                <UserMenu session={session} />
               </div>
             )}
           </li>

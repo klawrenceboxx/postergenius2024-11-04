@@ -43,7 +43,8 @@ export default function Home() {
     city: "Unavailable",
   });
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  console.log(session);
 
   useEffect(() => {
     const getCountry = async () => {
