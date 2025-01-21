@@ -8,6 +8,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import Link from "next/link";
+import Button1 from "@/components/buttons/Button1";
 
 interface LoginValues {
   login_email: string;
@@ -55,9 +56,11 @@ export default function signin() {
               </Link>
             </span>
           </div>
-          <div>
-            <h1>sign in</h1>
-            <p>
+
+          {/* Sign-In Form */}
+          <div className="bg-white p-8 rounded-md shadow-lg w-full max-w-md">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">sign in</h1>
+            <p className="text-gray-500 mb-6">
               Get acceess to one of the best Eshopping services in the world.
             </p>
             <Formik
@@ -86,6 +89,23 @@ export default function signin() {
                     placeholder="Password"
                     onChange={handleChange}
                   />
+
+                  {/* Submit Button */}
+                  <Button1
+                    type="submit"
+                    text="Sign In"
+                    className="w-full bg-blue-500 text-white py-3 rounded-md mt-4 flex items-center justify-center hover:bg-blue-600 transition"
+                  />
+
+                  {/* Forgot Password */}
+                  <div className="mt-4 text-center">
+                    <Link
+                      href="/forget"
+                      className="text-sm text-blue-500 hover:text-blue-600"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
                 </Form>
               )}
             </Formik>
