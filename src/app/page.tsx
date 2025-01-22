@@ -13,28 +13,28 @@ export type CountryData = {
   city: string;
 };
 
-const fetchCountry = async (): Promise<CountryData> => {
-  try {
-    const res = await fetch(
-      "https://api.ipregistry.co/?key=ira_wz5qeU9B07BN0m65TypWKvD1ZA8cdl03KDbF",
-      { cache: "no-store" } // Ensures fresh data for every request
-    );
+// const fetchCountry = async (): Promise<CountryData> => {
+//   try {
+//     const res = await fetch(
+//       "https://api.ipregistry.co/?key=ira_wz5qeU9B07BN0m65TypWKvD1ZA8cdl03KDbF",
+//       { cache: "no-store" } // Ensures fresh data for every request
+//     );
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch data: ${res.statusText}`);
-    }
+//     if (!res.ok) {
+//       throw new Error(`Failed to fetch data: ${res.statusText}`);
+//     }
 
-    const data = await res.json();
-    return {
-      name: data.location?.country?.name || "Unavailable",
-      region: data.location?.region?.name || "Unavailable",
-      city: data.location?.city || "Unavailable",
-    };
-  } catch (error) {
-    console.error("Error fetching country data:", error);
-    return { name: "Unavailable", region: "Unavailable", city: "Unavailable" };
-  }
-};
+//     const data = await res.json();
+//     return {
+//       name: data.location?.country?.name || "Unavailable",
+//       region: data.location?.region?.name || "Unavailable",
+//       city: data.location?.city || "Unavailable",
+//     };
+//   } catch (error) {
+//     console.error("Error fetching country data:", error);
+//     return { name: "Unavailable", region: "Unavailable", city: "Unavailable" };
+//   }
+// };
 
 export default function Home() {
   const [country, setCountry] = useState<CountryData>({
@@ -46,15 +46,16 @@ export default function Home() {
   const { data: session, status } = useSession();
   console.log(session);
 
-  useEffect(() => {
-    const getCountry = async () => {
-      const fetchedCountry = await fetchCountry();
-      setCountry(fetchedCountry);
-    };
-    getCountry();
-  }, []);
+  // useEffect(() => {
+  //   const getCountry = async () => {
+  //     const fetchedCountry = await fetchCountry();
+  //     setCountry(fetchedCountry);
+  //   };
+  //   getCountry();
+  // }, []);
 
   // if (session) {
+
   return (
     <div>
       <Header country={country} />

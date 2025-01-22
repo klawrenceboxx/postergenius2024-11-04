@@ -29,14 +29,14 @@ export default function LoginInput({ icon, ...props }: LoginInputProps) {
 
   return (
     <div className="mb-4">
-      <div className="flex items-center border rounded-lg bg-gray-100 px-3 py-2">
+      <div className="flex items-center border rounded-full bg-gray-100 px-4 py-3">
         {renderIcon()}
+        <input
+          {...field} // includes { name, value, onBlur, onChange }
+          {...props} // includes e.g. type="text", placeholder, etc.
+          className="ml-3 bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"
+        />
       </div>
-      <input
-        {...field} // includes { name, value, onBlur, onChange }
-        {...props} // includes e.g. type="text", placeholder, etc.
-        className="ml-3 bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"
-      />
 
       {meta.touched && meta.error && (
         <div className="text-red-500 text-sm mt-1">
