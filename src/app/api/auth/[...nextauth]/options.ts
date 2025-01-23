@@ -12,10 +12,10 @@ import clientPromise from "../lib/mongodb";
 export const options: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
-    }),
+    // GitHubProvider({
+    //   clientId: process.env.GITHUB_ID as string,
+    //   clientSecret: process.env.GITHUB_SECRET as string,
+    // }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID as string,
       clientSecret: process.env.GOOGLE_SECRET as string,
@@ -24,11 +24,11 @@ export const options: NextAuthOptions = {
       clientId: process.env.FACEBOOK_ID as string,
       clientSecret: process.env.FACEBOOK_SECRET as string,
     }),
-    Auth0Provider({
-      clientId: process.env.AUTH0_CLIENT_ID as string,
-      clientSecret: process.env.AUTH0_CLIENT_SECRET as string,
-      issuer: process.env.AUTH0_ISSUER as string,
-    }),
+    // Auth0Provider({
+    //   clientId: process.env.AUTH0_CLIENT_ID as string,
+    //   clientSecret: process.env.AUTH0_CLIENT_SECRET as string,
+    //   issuer: process.env.AUTH0_ISSUER as string,
+    // }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
