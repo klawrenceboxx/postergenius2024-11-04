@@ -6,6 +6,9 @@ import Main from "@/components/home/main";
 import FlashDeals from "@/components/home/flashDeals";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import db from "@/utils/db";
+import product from "@/models/Product";
+import Category from "@/models/Category";
 
 export type CountryData = {
   name: string;

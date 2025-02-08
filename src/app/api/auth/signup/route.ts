@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 import db from "@/utils/db";
 import { validateEmail } from "@/utils/validation";
+import User from "@/models/Users";
+import bcrypt from "bcrypt";
+import { createActivationToken } from "@/utils/jwt";
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,6 +13,7 @@ export async function POST(req: NextRequest) {
 
     await db.connectDb();
 
+    // ✅ Validate email format before anything
     if (!validateEmail(email)) {
       return NextResponse.json(
         { message: "Invalid email address." },
@@ -16,9 +21,56 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ✅ Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return NextResponse.json(
+        { message: "Email already exists. Please use a different one." },
+        { status: 400 }
+      );
+    }
+
+    // ✅ Validate password length
+    if (!password || password.length < 6) {
+      return NextResponse.json(
+        { message: "Password must be at least 6 characters long." },
+        { status: 400 }
+      );
+    }
+
+    // Hash the password before saving to DB
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    // Create and save the new user
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+
+    const userId =
+      newUser._id instanceof mongoose.Types.ObjectId
+        ? newUser._id.toString()
+        : String(newUser._id);
+
+    // Generate activation token
+    const activationToken = createActivationToken({
+      id: userId,
+    });
+
+    const url = `${process.env.BASE_URL}/activate/${activationToken}`;
+
+    // ✅ Return the URL as a response for Postman testing
+    return NextResponse.json({ activationUrl: url }, { status: 201 });
+
+    // Displays all of the user data to postman
+    // return NextResponse.json(newUser);
+
     return NextResponse.json(
-      { message: "Sign up successful!" },
-      { status: 200 }
+      { message: "Sign up successful!", activationToken, user: newUser },
+      { status: 201 }
     );
   } catch (error: unknown) {
     if (error instanceof Error) {

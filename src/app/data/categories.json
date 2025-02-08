@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Gaming",
+    "slug": "gaming"
+  },
+  {
+    "name": "Electronics",
+    "slug": "electronics"
+  },
+  {
+    "name": "Accessories",
+    "slug": "accessories"
+  }
+]
