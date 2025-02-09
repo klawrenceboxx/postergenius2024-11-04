@@ -1,7 +1,7 @@
 "use client";
 
-import Header from "../components/header/index";
-import Footer from "../components/footer/index";
+import Header from "../components/Header/index";
+import Footer from "../components/Footer/index";
 import Main from "@/components/home/main";
 import FlashDeals from "@/components/home/flashDeals";
 import { useSession, signIn, signOut } from "next-auth/react";
