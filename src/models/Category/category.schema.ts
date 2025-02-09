@@ -1,14 +1,6 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
+import { ICategory } from "./category.interface"; // Interface for the category
 
-// Interface for a Category
-export interface ICategory extends Document {
-  name: string;
-  slug: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
-// Category Schema
 const CategorySchema = new Schema<ICategory>(
   {
     name: {
@@ -25,10 +17,10 @@ const CategorySchema = new Schema<ICategory>(
       index: true, // Optimized for searches
     },
   },
-  { timestamps: true }
+  { timestamps: true } // Adds createdAt and updatedAt fields
 );
 
-// Model Definition (Prevents Hot-Reload Errors in Next.js)
+// Prevents redefinition errors in Next.js
 const CategoryModel: Model<ICategory> =
   mongoose.models.Category ||
   mongoose.model<ICategory>("Category", CategorySchema);

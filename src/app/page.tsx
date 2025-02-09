@@ -1,14 +1,12 @@
 "use client";
 
-import Header from "../components/Header/index";
-import Footer from "../components/Footer/index";
-import Main from "@/components/home/main";
-import FlashDeals from "@/components/home/flashDeals";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
-import db from "@/utils/db";
-import product from "@/models/Product";
-import Category from "@/models/Category";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Main from "@/components/home/main";
+import FlashDeals from "@/components/home/flashDeals";
+import CategorySection from "@/components/CategorySection";
 
 export type CountryData = {
   name: string;
@@ -82,6 +80,8 @@ export default function Home() {
       )}
       <Main />
       <FlashDeals />
+      <CategorySection />
+
       <Footer country={country} />
     </div>
   );

@@ -1,14 +1,14 @@
 [
   {
-    "name": "Gaming",
-    "slug": "gaming"
+    "name": "Category 1",
+    "slug": "category-1",
+    "_id": "1",
+    "subcategories": []
   },
   {
-    "name": "Electronics",
-    "slug": "electronics"
-  },
-  {
-    "name": "Accessories",
-    "slug": "accessories"
+    "name": "Category 2",
+    "slug": "category-2",
+    "_id": "2",
+    "subcategories": []
   }
 ]
