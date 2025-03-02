@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "name": "African Safari",
+    "description": "African Safari",
+    "price": 10,
+    "image": "/images/posters/AfricanSafari/ANML-BFLO-BLKWHT-01.png",
+    "category": "safari"
+  },
+  {
+    "id": 2,
+    "name": "African Safari",
+    "description": "African Safari",
+    "price": 10,
+    "image": "/images/posters/AfricanSafari/ANML-CHTH-ORNBLK-01.png",
+    "category": "safari"
+  },
+  {
+    "id": 3,
+    "name": "African Safari",
+    "description": "African Safari",
+    "price": 10,
+    "image": "/images/posters/AfricanSafari/ANML-FLMG-PNKBLU-01.png",
+    "category": "safari"
+  },
+  {
+    "id": 4,
+    "name": "African Safari",
+    "description": "African Safari",
+    "price": 10,
+    "image": "/images/posters/AfricanSafari/ANML-GRFE-ORNBLU-01.png",
+    "category": "safari"
+  },
+  {
+    "id": 5,
+    "name": "African Safari",
+    "description": "African Safari",
+    "price": 10,
+    "image": "/images/posters/AfricanSafari/ANML-HIPPO-ORNBRN-01.png",
+    "category": "safari"
+  },
+  {
+    "id": 6,
+    "name": "African Safari",
+    "description": "African Safari",
+    "price": 10,
+    "image": "/images/posters/AfricanSafari/ANML-ZBRA-YLWWHT-02.png",
+    "category": "safari"
+  },
+  {
+    "id": 7,
+    "name": "Superheroes",
+    "description": "Superheroes",
+    "price": 10,
+    "image": "/images/posters/Superheroes/SUPR-BAT-BLUORN-01.png",
+    "category": "superheros"
+  },
+  {
+    "id": 8,
+    "name": "Superheroes",
+    "description": "Superheroes",
+    "price": 10,
+    "image": "/images/posters/Superheroes/SUPR-CAP-BLUORN-01.png",
+    "category": "superheros"
+  },
+  {
+    "id": 9,
+    "name": "Superheroes",
+    "description": "Superheroes",
+    "price": 10,
+    "image": "/images/posters/Superheroes/SUPR-FLSH-YLWRED-01.png",
+    "category": "superheros"
+  },
+  {
+    "id": 10,
+    "name": "Superheroes",
+    "description": "Superheroes",
+    "price": 10,
+    "image": "/images/posters/Superheroes/SUPR-IRON-GRNORN-01.png",
+    "category": "superheros"
+  },
+  {
+    "id": 11,
+    "name": "Superheroes",
+    "description": "Superheroes",
+    "price": 10,
+    "image": "/images/posters/Superheroes/SUPR-SPDR-BLURED-01.png",
+    "category": "superheros"
+  },
+  {
+    "id": 12,
+    "name": "Superheroes",
+    "description": "Superheroes",
+    "price": 10,
+    "image": "/images/posters/Superheroes/SUPR-SUP-BLUORN-01.png",
+    "category": "superheros"
+  },
+  {
+    "id": 13,
+    "name": "Space",
+    "description": "Space",
+    "price": 10,
+    "image": "/images/posters/Space/SPC-ASTRO-BLUWHT-01.png",
+    "category": "space"
+  },
+  {
+    "id": 14,
+    "name": "Space",
+    "description": "Space",
+    "price": 10,
+    "image": "/images/posters/Space/SPC-AURO-BLUBLK-01.png",
+    "category": "space"
+  },
+  {
+    "id": 15,
+    "name": "Space",
+    "description": "Space",
+    "price": 10,
+    "image": "/images/posters/Space/SPC-CNTWR-BLUORN-01.png",
+    "category": "space"
+  },
+  {
+    "id": 16,
+    "name": "Space",
+    "description": "Space",
+    "price": 10,
+    "image": "/images/posters/Space/SPC-GLXY-BLUORN-01.png",
+    "category": "space"
+  },
+  {
+    "id": 17,
+    "name": "Space",
+    "description": "Space",
+    "price": 10,
+    "image": "/images/posters/Space/SPC-HOLE-BLKRED-01.png",
+    "category": "space"
+  },
+  {
+    "id": 18,
+    "name": "Space",
+    "description": "Space",
+    "price": 10,
+    "image": "/images/posters/Space/SPC-JPTR-YLWBLK-01.png",
+    "category": "space"
+  }
+]

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { MdFlashOn } from "react-icons/md";
 
-interface product {
+interface Product {
   link: string;
   image: string;
   discount: number;
@@ -10,7 +10,7 @@ interface product {
 }
 
 interface FlashCardProps {
-  product: product;
+  product: Product;
 }
 
 const FlashCard: React.FC<FlashCardProps> = ({ product }) => {
@@ -22,9 +22,16 @@ const FlashCard: React.FC<FlashCardProps> = ({ product }) => {
 
   return (
     <div className="bg-white text-gray-900 rounded shadow p-3 hover:shadow-lg transition duration-300">
-      <div>
+      <div className="relative">
         <Link href={product.link}>
-          <img src={product.image} alt="" className="w-full" />
+          {/* Container to enforce a consistent aspect ratio */}
+          <div className="w-full h-64 overflow-hidden">
+            <img
+              src={product.image}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
         </Link>
         <div className="absolute top-2 left-2 flex items-center gap-1 bg-yellow-500 text-white px-2 py-1 text-sm rounded">
           <MdFlashOn />
@@ -40,9 +47,11 @@ const FlashCard: React.FC<FlashCardProps> = ({ product }) => {
         </span>
       </div>
       <div className="mt-2 text-sm text-gray-600">
-        {" "}
         {product.sold} sold
-        <div className="bg-red-500 h-2" style={{ width: `${product.sold}%` }} />
+        <div
+          className="bg-red-500 h-2 mt-1"
+          style={{ width: `${product.sold}%` }}
+        />
       </div>
     </div>
   );

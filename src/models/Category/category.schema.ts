@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from "mongoose";
-import { ICategory } from "./category.interface"; // Interface for the category
+import { ICategory } from "./category.interface";
 
 const CategorySchema = new Schema<ICategory>(
   {
@@ -20,7 +20,6 @@ const CategorySchema = new Schema<ICategory>(
   { timestamps: true } // Adds createdAt and updatedAt fields
 );
 
-// Prevents redefinition errors in Next.js
 const CategoryModel: Model<ICategory> =
   mongoose.models.Category ||
   mongoose.model<ICategory>("Category", CategorySchema);

@@ -19,8 +19,14 @@ const FlashDeals: React.FC = () => {
         <Countdown />
       </div>
       <Swiper
-        slidesPerView={6}
-        spaceBetween={30}
+        breakpoints={{
+          320: { slidesPerView: 2, spaceBetween: 10 },
+          480: { slidesPerView: 2, spaceBetween: 15 },
+          640: { slidesPerView: 3, spaceBetween: 20 },
+          768: { slidesPerView: 4, spaceBetween: 25 },
+          1024: { slidesPerView: 5, spaceBetween: 30 },
+          1280: { slidesPerView: 6, spaceBetween: 35 },
+        }}
         navigation={true}
         modules={[Navigation]}
         className="text-white"

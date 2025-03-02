@@ -1,14 +1,20 @@
 [
   {
-    "name": "Category 1",
-    "slug": "category-1",
+    "name": "Safari",
+    "slug": "Safari",
     "_id": "1",
     "subcategories": []
   },
   {
-    "name": "Category 2",
-    "slug": "category-2",
+    "name": "Superheros",
+    "slug": "Superheros",
     "_id": "2",
+    "subcategories": []
+  },
+  {
+    "name": "Space",
+    "slug": "Space",
+    "_id": "3",
     "subcategories": []
   }
 ]
