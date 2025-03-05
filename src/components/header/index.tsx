@@ -1,10 +1,10 @@
 import Ad from "./Ad";
 import Main from "./Main";
 import Top from "./Top";
-import { countryData } from "../../app/page"; // Adjust path as needed
+import { CountryData } from "@/types/CountryData";
 
 type HeaderProps = {
-  country: countryData;
+  country: CountryData;
 };
 
 const Header: React.FC<HeaderProps> = ({ country }) => {

@@ -1,95 +1,50 @@
-"use client";
+import db from "@/utils/db";
+import { PosterModel } from "@/models/Posters";
+import { options } from "@/app/api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+import ClientHome from "@/app/clientHome";
 
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect, useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Main from "@/components/home/main";
-import FlashDeals from "@/components/home/flashDeals";
-import CategorySection from "@/components/CategorySection";
+export default async function Home() {
+  // 1. Connect to the DB and fetch poster data
+  await db.connectDb();
+  const rawPosters = await PosterModel.find().sort({ createdAt: -1 }).lean();
+  await db.disconnectDb();
 
-export type CountryData = {
-  name: string;
-  region: string;
-  city: string;
-};
+  // Convert any Mongoose objects (like ObjectIds) into plain objects
+  const posters = JSON.parse(JSON.stringify(rawPosters));
 
-// const fetchCountry = async (): Promise<CountryData> => {
-//   try {
-//     const res = await fetch(
-//       "https://api.ipregistry.co/?key=ira_wz5qeU9B07BN0m65TypWKvD1ZA8cdl03KDbF",
-//       { cache: "no-store" } // Ensures fresh data for every request
-//     );
-
-//     if (!res.ok) {
-//       throw new Error(`Failed to fetch data: ${res.statusText}`);
-//     }
-
-//     const data = await res.json();
-//     return {
-//       name: data.location?.country?.name || "Unavailable",
-//       region: data.location?.region?.name || "Unavailable",
-//       city: data.location?.city || "Unavailable",
-//     };
-//   } catch (error) {
-//     console.error("Error fetching country data:", error);
-//     return { name: "Unavailable", region: "Unavailable", city: "Unavailable" };
-//   }
-// };
-
-export default function Home() {
-  const [country, setCountry] = useState<CountryData>({
+  // 2. Fetch IP data (country)
+  let country = {
     name: "Unavailable",
     region: "Unavailable",
     city: "Unavailable",
-  });
+  };
 
-  const { data: session, status } = useSession();
-  console.log(session);
+  try {
+    const ipRes = await fetch(
+      "https://api.ipregistry.co/?key=YOUR_API_KEY" // Replace with your key
+    );
+    if (ipRes.ok) {
+      const data = await ipRes.json();
+      country = {
+        name: data.location?.country?.name || "Unavailable",
+        region: data.location?.region?.name || "Unavailable",
+        city: data.location?.city || "Unavailable",
+      };
+    }
+  } catch (err) {
+    console.error("Error fetching IP data", err);
+  }
 
-  // useEffect(() => {
-  //   const getCountry = async () => {
-  //     const fetchedCountry = await fetchCountry();
-  //     setCountry(fetchedCountry);
-  //   };
-  //   getCountry();
-  // }, []);
+  // 3. Get the session (can be null if not logged in)
+  const session = await getServerSession(options);
 
-  // if (session) {
-
+  // 4. Render the client component; it will handle its own loading state
   return (
-    <div>
-      <Header country={country} />
-      <p className="text-lg font-semibold text-gray-700">
-        {/* Signed in as {session.user?.email} <br /> */}
-        {/* <button onClick={() => signOut()}>Sign out</button> */}
-        Country: {country.name}
-      </p>
-      {status === "loading" ? (
-        <p>Loading session...</p>
-      ) : session ? (
-        <>
-          <p>You are logged in as {session.user?.email}</p>
-          <button onClick={() => signOut()}>Sign out</button>
-        </>
-      ) : (
-        <>
-          <p>You are not logged in</p>
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
-      <Main />
-      <FlashDeals />
-      <CategorySection />
-
-      <Footer country={country} />
-    </div>
+    <ClientHome
+      serverSession={session}
+      serverCountry={country}
+      serverProducts={posters}
+    />
   );
 }
-// return (
-//   <>
-//     Not signed in <br />
-//     <button onClick={() => signIn()}>Sign in</button>
-//   </>
-// );
-// };

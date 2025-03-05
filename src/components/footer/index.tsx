@@ -3,10 +3,10 @@ import Links from "./Links";
 import Socials from "./Socials";
 import Newsletter from "./NewsLetter";
 import Payment from "./Payment";
-import { countryData } from "../../app/page"; // Adjust path as needed
+import { CountryData } from "@/types/CountryData";
 
 type FooterProps = {
-  country: countryData;
+  country: CountryData;
 };
 
 const Footer: React.FC<FooterProps> = ({ country }) => {
