@@ -5,6 +5,13 @@ import db from "../utils/db";
 import PosterModel from "@/models/Posters/poster.schema";
 import CategoryModel from "@/models/Category/category.schema";
 
+// ✅ Define Standard Sizes & Prices
+const SIZE_OPTIONS = [
+  { size: "12x18", price: 29.99 },
+  { size: "18x24", price: 39.99 },
+  { size: "24x36", price: 49.99 },
+];
+
 async function seedPosters() {
   try {
     await db.connectDb();
@@ -16,7 +23,7 @@ async function seedPosters() {
       throw new Error("Categories not found. Please seed categories first.");
     }
 
-    // Define category variables using the category identifier (e.g., slug)
+    // Define category variables
     const superheroCategory = categories.find(
       (cat: any) => cat.slug === "superheroes"
     );
@@ -28,43 +35,61 @@ async function seedPosters() {
     // Clear existing posters in the collection
     await PosterModel.deleteMany({});
 
-    // Seed Posters (transformed to match the Poster schema)
+    // Function to generate slug
+    const generateSlug = (title: string, tags: string[], sku: string) => {
+      const formattedTitle = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      const formattedTags = tags
+        .map((tag) => tag.toLowerCase().replace(/[^a-z0-9]+/g, "-"))
+        .join("-");
+      return `${formattedTitle}-${formattedTags}-${sku}`;
+    };
+
+    // Posters to Seed
     const postersToSeed = await PosterModel.insertMany([
       {
-        title: "Captain America Poster",
-        description: "A dynamic pose of Captain America.",
-        price: 19.99,
-        imageUrl: "/images/captain-america.jpg",
-        // Use reference to the category with slug "superheroes"
+        title: "Thor Poster",
+        description: "A dynamic pose of Thor, God of Thunder.",
+        price: 39.99,
+        imageUrl: "https://storage.googleapis.com/digital_posters/thor.jpeg",
         categories: superheroCategory ? [superheroCategory._id] : [],
         tags: ["marvel", "superhero", "action"],
+        sku: "SUPR-THOR-BLUEWHT-01",
+        slug: generateSlug(
+          "Thor Poster",
+          ["marvel", "superhero", "action"],
+          "SUPR-THOR-BLUEWHT-01"
+        ),
         variations: [
           {
             type: "Horizontal",
-            imageUrl: "/images/captain-america-horizontal.jpg",
-            sizes: [
-              { size: "8x10", price: 10.99 },
-              { size: "16x20", price: 19.99 },
-            ],
+            imageUrl:
+              "https://storage.googleapis.com/digital_posters/thor.jpeg",
+            sizes: SIZE_OPTIONS,
           },
         ],
         reviews: [],
       },
       {
-        title: "Cheetah in Action",
-        description: "A breathtaking shot of a cheetah running.",
-        price: 14.99,
-        imageUrl: "/images/cheetah.jpg",
+        title: "African Sunset",
+        description:
+          "A breathtaking painting of an African Elephant at sunset.",
+        price: 39.99,
+        imageUrl:
+          "https://storage.googleapis.com/digital_posters/elephant.jpeg",
         categories: safariCategory ? [safariCategory._id] : [],
         tags: ["wildlife", "safari", "nature"],
+        sku: "SAFR-ELEPH-REDORG-01",
+        slug: generateSlug(
+          "African Sunset",
+          ["wildlife", "safari", "nature"],
+          "SAFR-ELEPH-REDORG-01"
+        ),
         variations: [
           {
             type: "Vertical",
-            imageUrl: "/images/cheetah-vertical.jpg",
-            sizes: [
-              { size: "8x10", price: 12.99 },
-              { size: "16x20", price: 18.99 },
-            ],
+            imageUrl:
+              "https://storage.googleapis.com/digital_posters/elephant.jpeg",
+            sizes: SIZE_OPTIONS,
           },
         ],
         reviews: [],
@@ -72,18 +97,23 @@ async function seedPosters() {
       {
         title: "Milky Way Galaxy",
         description: "A stunning view of the Milky Way.",
-        price: 24.99,
-        imageUrl: "/images/milky-way.jpg",
+        price: 49.99,
+        imageUrl:
+          "https://storage.googleapis.com/digital_posters/milkyway.jpeg",
         categories: spaceCategory ? [spaceCategory._id] : [],
         tags: ["space", "galaxy", "stars"],
+        sku: "SPCE-MILKY-BLACKPUR-01",
+        slug: generateSlug(
+          "Milky Way Galaxy",
+          ["space", "galaxy", "stars"],
+          "SPCE-MILKY-BLACKPUR-01"
+        ),
         variations: [
           {
             type: "Panoramic",
-            imageUrl: "/images/milky-way-panoramic.jpg",
-            sizes: [
-              { size: "12x36", price: 29.99 },
-              { size: "24x72", price: 49.99 },
-            ],
+            imageUrl:
+              "https://storage.googleapis.com/digital_posters/milkyway.jpeg",
+            sizes: SIZE_OPTIONS,
           },
         ],
         reviews: [],

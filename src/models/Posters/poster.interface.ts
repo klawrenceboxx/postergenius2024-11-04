@@ -23,10 +23,12 @@ export interface IReview {
 export interface IPoster {
   title: string;
   description: string;
+  slug: string; // Unique slug for the poster
   price: number; // Base price of the poster
   imageUrl: string;
   categories: Types.ObjectId[]; // References to Category model
   tags?: string[]; // Optional tags for filtering
   variations?: IVariation[]; // Array of variations
   reviews?: IReview[]; // Array of reviews
+  sku: string; // Unique Stock Keeping Unit identifier
 }

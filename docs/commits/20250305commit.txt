@@ -1,0 +1,40 @@
+- **Fix Hydration Mismatch Errors:**
+
+  - Move rendering logic back to `page.tsx` since Next.js 13+ only allows `page.tsx` files as valid routes.
+  - Ensure `clientHome.tsx` is a Client Component (`"use client";`) and is only used as a child component inside `page.tsx`.
+  - Fix state and effect-based hydration inconsistencies by deferring browser-only logic using `useEffect`.
+
+- **Ensure Proper Mongoose Data Serialization:**
+
+  - Convert Mongoose documents to plain JSON objects using `JSON.parse(JSON.stringify(...))` in `app/page.tsx` to prevent non-serializable data (e.g., `ObjectId`, `Date`) from being passed to Client Components.
+  - Transform `_id` and `categories` fields into strings before passing them to the client to prevent `object-undefined` errors.
+
+- **Improve Server-Side Data Fetching & Session Handling:**
+
+  - Ensure the server-side page component safely fetches and transforms poster data before passing it to `ClientHome`.
+  - Refactor session handling to avoid unnecessary "Loading..." states for unauthenticated users.
+  - Ensure `serverProducts`, `serverSession`, and `serverCountry` are properly structured and passed to `ClientHome`.
+
+- **Refactor & Standardize Next.js Project Structure:**
+
+  - Remove incorrect use of `clientHome.tsx` as a standalone route and correctly import it in `page.tsx`.
+  - Simplify and update `app/layout.tsx` for a cleaner layout structure.
+  - Ensure Tailwind class mismatches are resolved by using static class names in server-rendered components.
+
+- **Update TypeScript & Next.js Configurations:**
+
+  - Modify `tsconfig.json` to include `"skipLibCheck": true`, reducing red type-check errors from Next.js auto-generated stubs.
+  - Ensure all TypeScript imports and models use proper ES module syntax to prevent `ERR_UNKNOWN_FILE_EXTENSION` errors.
+  - Install and configure `dotenv` properly to load `.env` variables before database connections.
+
+- **Fix Database Seeding Issues & Improve Stability:**
+  - Fix undefined category references (`superheroCategory`, `safariCategory`, `spaceCategory`) in `seedPosters.ts` to ensure correct MongoDB references.
+  - Update `db.ts` to log connection errors and ensure `MONGODB_URL` is correctly loaded.
+  - Replace `ts-node` with `tsx` for better TypeScript execution in modern Next.js environments.
+
+**Result:**
+✔️ Hydration mismatches eliminated
+✔️ Data serialization improved for stability
+✔️ TypeScript errors reduced  
+✔️ Database seeding works correctly  
+✔️ Next.js best practices followed for a more scalable and maintainable project
