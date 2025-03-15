@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/page.tx",
-    "src/app/page.tst"
+    "src/app/page.tst",
+    "src/app/posters/[slug]/page.tx"
   ],
   "exclude": [".next", "node_modules"]
 }

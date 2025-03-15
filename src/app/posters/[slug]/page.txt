@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import db from "@/utils/db";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
@@ -8,7 +9,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ParsedUrlQuery } from "querystring";
 import { ProductType } from "@/types/ProductType";
-import { Key } from "react";
 import { CategoryType } from "@/types/CategoryType";
 
 interface ProductPageProps {
@@ -45,21 +45,24 @@ export default function ProductPage({ product }: ProductPageProps) {
       <div className="container mx-auto px-4 py-6 min-h-screen">
         {/* Breadcrumb Path */}
         <div className="text-sm text-gray-600 mb-4">
-          <span className="hover:text-gray-800 cursor-pointer">Home</span> &gt;{" "}
-          <span className="hover:text-gray-800 cursor-pointer">
-            {product.category?.name}
-          </span>{" "}
-          &gt;{" "}
-          {product.subcategories?.map(
-            (subcategory: any, index: Key | null | undefined) => (
-              <span key={index} className="hover:text-gray-800 cursor-pointer">
-                {subcategory.name}
-                {typeof index === "number" &&
-                  index < product.subcategories.length - 1 &&
-                  " > "}
+          <Link href="/">
+            <span className="hover:text-gray-800 cursor-pointer">Home</span>
+          </Link>
+          {" > "}
+          {product.category && (
+            <Link href={`/category/${product.category.slug}`}>
+              <span className="hover:text-gray-800 cursor-pointer">
+                {product.category.name}
               </span>
-            )
+            </Link>
           )}
+          {" > "}
+          {product.subcategories?.map((subcategory, index) => (
+            <span key={index} className="hover:text-gray-800 cursor-pointer">
+              {subcategory.name}
+              {index < product.subcategories.length - 1 && " > "}
+            </span>
+          ))}
         </div>
 
         {/* Product Details */}
@@ -68,16 +71,14 @@ export default function ProductPage({ product }: ProductPageProps) {
 
         {/* Product Images */}
         <div className="flex gap-4 mt-6 overflow-x-auto">
-          {product.images.map(
-            (image: string | undefined, index: Key | null | undefined) => (
-              <img
-                key={index}
-                src={image}
-                alt={`${product.name} - Image ${Number(index) + 1}`}
-                className="rounded-lg shadow-md w-48 h-48 object-cover"
-              />
-            )
-          )}
+          {product.images.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`${product.name} - Image ${index + 1}`}
+              className="rounded-lg shadow-md w-48 h-48 object-cover"
+            />
+          ))}
         </div>
 
         {/* Product Information */}
@@ -87,7 +88,7 @@ export default function ProductPage({ product }: ProductPageProps) {
           </p>
           <p className="text-lg mt-2">Available Colors:</p>
           <div className="flex gap-2 mt-2">
-            {product.colors.map((color: any, index: Key | null | undefined) => (
+            {product.colors.map((color, index) => (
               <span
                 key={index}
                 className="w-6 h-6 rounded-full border border-gray-300"
@@ -105,10 +106,12 @@ export default function ProductPage({ product }: ProductPageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Extract slug and optional style/size parameters
   const { slug, style = "0", size = "0" } = context.query as ContextQuery;
 
   await db.connectDb();
 
+  // Find product by slug and populate related fields
   const product = await Product.findOne({ slug })
     .populate({
       path: "category",
@@ -125,15 +128,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { notFound: true };
   }
 
+  // Choose a subProduct based on the "style" parameter
   const subProduct = product.subProducts[+style];
   const prices = subProduct.sizes
-    .map((size) => size.price)
-    .sort((a, b) => a - b);
+    .map((s: any) => s.price)
+    .sort((a: number, b: number) => a - b);
 
+  // Enhance product object with display fields
   const enhancedProduct = {
     ...product,
-    images: subProduct.images,
-    colors: product.subProducts.map((sp) => sp.color),
+    images: subProduct.images, // images for the selected style
+    colors: product.subProducts.map((sp: any) => sp.color), // available colors across subProducts
     price: subProduct.sizes[+size]?.price || prices[0],
     priceRange:
       prices.length > 1

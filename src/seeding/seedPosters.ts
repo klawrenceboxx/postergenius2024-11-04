@@ -50,7 +50,8 @@ async function seedPosters() {
         title: "Thor Poster",
         description: "A dynamic pose of Thor, God of Thunder.",
         price: 39.99,
-        imageUrl: "https://storage.googleapis.com/digital_posters/thor.jpeg",
+        imageUrl:
+          "https://storage.googleapis.com/digital_posters/kincaid1207_Thor_hammer_raised_summons_a_storm_lightning_crac_fcedce18-9702-4387-a06a-8d6c7662d50a_0-topaz-standard%20v2-900w.jpeg",
         categories: superheroCategory ? [superheroCategory._id] : [],
         tags: ["marvel", "superhero", "action"],
         sku: "SUPR-THOR-BLUEWHT-01",
@@ -63,7 +64,7 @@ async function seedPosters() {
           {
             type: "Horizontal",
             imageUrl:
-              "https://storage.googleapis.com/digital_posters/thor.jpeg",
+              "https://storage.googleapis.com/digital_posters/kincaid1207_Thor_hammer_raised_summons_a_storm_lightning_crac_fcedce18-9702-4387-a06a-8d6c7662d50a_0-topaz-standard%20v2-900w.jpeg",
             sizes: SIZE_OPTIONS,
           },
         ],
@@ -75,8 +76,7 @@ async function seedPosters() {
           "A breathtaking painting of an African Elephant at sunset.",
         price: 39.99,
         imageUrl:
-          "https://storage.googleapis.com/digital_posters/elephant.jpeg",
-        categories: safariCategory ? [safariCategory._id] : [],
+          "https://storage.googleapis.com/digital_posters/kincaid1207_A_silhouette_of_an_elephant_stands_against_a_suns_6ccd0e35-a9f6-4c36-bb13-97ed9ac6cb21_2-topaz-standard%20v2-900w.jpeg",
         tags: ["wildlife", "safari", "nature"],
         sku: "SAFR-ELEPH-REDORG-01",
         slug: generateSlug(
@@ -88,8 +88,7 @@ async function seedPosters() {
           {
             type: "Vertical",
             imageUrl:
-              "https://storage.googleapis.com/digital_posters/elephant.jpeg",
-            sizes: SIZE_OPTIONS,
+              "https://storage.googleapis.com/digital_posters/kincaid1207_A_silhouette_of_an_elephant_stands_against_a_suns_6ccd0e35-a9f6-4c36-bb13-97ed9ac6cb21_2-topaz-standard%20v2-900w.jpeg",
           },
         ],
         reviews: [],
@@ -99,7 +98,7 @@ async function seedPosters() {
         description: "A stunning view of the Milky Way.",
         price: 49.99,
         imageUrl:
-          "https://storage.googleapis.com/digital_posters/milkyway.jpeg",
+          "https://storage.googleapis.com/digital_posters/kincaid1207_A_region_of_space_where_new_stars_are_born_bursti_28cb603b-df78-4959-836a-e4f764e127d3_1-topaz-low%20resolution%20v2-900w.jpeg",
         categories: spaceCategory ? [spaceCategory._id] : [],
         tags: ["space", "galaxy", "stars"],
         sku: "SPCE-MILKY-BLACKPUR-01",
@@ -112,7 +111,7 @@ async function seedPosters() {
           {
             type: "Panoramic",
             imageUrl:
-              "https://storage.googleapis.com/digital_posters/milkyway.jpeg",
+              "https://storage.googleapis.com/digital_posters/kincaid1207_A_region_of_space_where_new_stars_are_born_bursti_28cb603b-df78-4959-836a-e4f764e127d3_1-topaz-low%20resolution%20v2-900w.jpeg",
             sizes: SIZE_OPTIONS,
           },
         ],
