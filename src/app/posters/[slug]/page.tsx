@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import db from "@/utils/db";
 import { PosterModel } from "@/models/Posters";
 import { CategoryModel } from "@/models/Category";
+import { isPopulatedCategory } from "@/models/Category/category.schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MainSwiper from "@/components/productPage/MainSwiper/Mainswiper";
@@ -97,10 +98,15 @@ export default async function Page({ params }: PageProps) {
             Home
           </Link>
           <span> / </span>{" "}
-          {poster.category?.parent?.name && (
+          {poster.category?.parent &&
+            isPopulatedCategory(poster.category.parent) && (
+              <>{poster.category.parent.name} / </>
+            )}
+          {poster.category.name} / {poster.title}
+          {/* {poster.category?.parent?.name && (
             <>{poster.category.parent.name} / </>
           )}
-          {poster.category.name} / {poster.title}{" "}
+          {poster.category.name} / {poster.title}{" "} */}
         </div>
         <div className="w-full">
           <MainSwiper images={mockups} />

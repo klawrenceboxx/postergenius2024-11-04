@@ -1,5 +1,12 @@
+import { Types } from "mongoose";
 import mongoose, { Schema, Model } from "mongoose";
 import { ICategory } from "./category.interface";
+
+export function isPopulatedCategory(
+  parent: Types.ObjectId | ICategory | null
+): parent is ICategory {
+  return !!parent && typeof parent === "object" && "name" in parent;
+}
 
 const CategorySchema = new Schema<ICategory>(
   {
