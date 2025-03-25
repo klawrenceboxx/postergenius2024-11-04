@@ -7,6 +7,7 @@ import { isPopulatedCategory } from "@/models/Category/category.schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MainSwiper from "@/components/productPage/MainSwiper/Mainswiper";
+import Infos from "@/components/productPage/infos/Infos";
 import Link from "next/link";
 
 interface PageProps {
@@ -112,6 +113,7 @@ export default async function Page({ params }: PageProps) {
         </div>
         <div className="w-full">
           <MainSwiper images={mockups ?? []} />
+          <Infos product={poster} />
         </div>
       </div>
       <Footer />

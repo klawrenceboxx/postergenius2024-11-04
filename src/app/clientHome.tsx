@@ -8,6 +8,7 @@ import FlashDeals from "@/components/home/flashDeals";
 import CategorySection from "@/components/CategorySection";
 import ProductCard from "@/components/ProductCard";
 import { v4 as uuidv4 } from "uuid";
+import { Types } from "mongoose";
 
 import { ProductType } from "@/types/ProductType";
 import { CategoryType } from "@/types/CategoryType";
@@ -44,50 +45,14 @@ function adaptPosterToProductType(
 
   return {
     _id: poster._id,
-    name: poster.title,
+    title: poster.title,
     slug: poster.slug,
     description: poster.description,
-    category: matchedCategory || {
-      _id: "",
-      name: "Unknown Category",
-      slug: "unknown-category",
-      subcategories: [],
-    },
-    subProducts: poster.variations?.map((variation) => ({
-      _id: `${poster._id}-${uuidv4()}`,
-      sku: `SKU-${uuidv4()}`,
-      color: variation.type,
-      colorImage: variation.imageUrl,
-      images: [variation.imageUrl],
-      sizes: variation.sizes.map((size) => ({
-        size: typeof size === "object" && size.size ? size.size : "One Size",
-        quantity: 10,
-        price:
-          typeof size === "object" && size.price ? size.price : poster.price,
-      })),
-      discount: 0,
-      sold: 0,
-    })) || [
-      {
-        _id: `${poster._id}-default`,
-        sku: `SKU-${Math.random().toString(36).substr(2, 9)}`,
-        color: "Default",
-        colorImage: "",
-        images: [poster.imageUrl],
-        sizes: [
-          {
-            size: "One Size",
-            quantity: 10,
-            price: poster.price,
-          },
-        ],
-        discount: 0,
-        sold: 0,
-      },
-    ],
+    category: matchedCategory ? new Types.ObjectId(matchedCategory._id) : null,
+    imageUrl: poster.imageUrl,
+    tags: poster.tags,
+    variations: poster.variations,
     price: poster.price,
-    priceBefore: poster.price,
-    shipping: 0,
     rating: 0,
     numReviews: poster.reviews?.length || 0,
     sold: 0,

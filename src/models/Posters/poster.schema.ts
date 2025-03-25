@@ -42,6 +42,7 @@ const PosterSchema = new Schema<IPoster>(
     title: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
+    salePrice: { type: Number }, // ✅ Add Sale Price
     imageUrl: { type: String, required: true },
     mockups: [{ type: String }],
     category: { type: mongoose.Types.ObjectId, ref: "Category", default: null },
@@ -49,6 +50,9 @@ const PosterSchema = new Schema<IPoster>(
     variations: [VariationSchema],
     sku: { type: String, required: true, unique: true }, // ✅ Add SKU
     slug: { type: String, required: true, unique: true }, // ✅ Add Slug
+    sold: { type: Number, default: 0 },
+    discount: { type: Number },
+    reviews: [ReviewSchema],
   },
   { timestamps: true } // ✅ Enable createdAt & updatedAt
 );

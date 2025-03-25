@@ -21,10 +21,12 @@ export interface IReview {
 
 // Main poster interface
 export interface IPoster {
-  title: string;
+  _id?: Types.ObjectId;
+  title: string; // name of the poster
   description: string;
   slug: string; // Unique slug for the poster
-  price: number; // Base price of the poster
+  price: number; // Specific price of the product
+  salePrice?: number; // manually set price for marketing purposes
   imageUrl: string;
   mockups?: string[];
   // category: Types.ObjectId; // References to Category model
@@ -33,4 +35,6 @@ export interface IPoster {
   variations?: IVariation[]; // Array of variations
   reviews?: IReview[]; // Array of reviews
   sku: string; // Unique Stock Keeping Unit identifier
+  sold: number; // Number of units sold
+  discount?: number; // Optional discount percentage
 }

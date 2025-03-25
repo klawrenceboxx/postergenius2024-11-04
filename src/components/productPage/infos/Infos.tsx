@@ -9,31 +9,44 @@ const Infos: FC<InfosProps> = ({ product }) => {
   return (
     <div className="p-4 bg-white rounded-lg shadow-lg">
       {/* Product Name */}
-      <h1 className="text-2xl font-bold text-gray-900">{product.name}</h1>
+      <h1 className="text-2xl font-bold text-gray-900">{product.title}</h1>
+
+      {/* SKU */}
       {product.sku && (
         <h2 className="text-sm text-gray-600 mt-1">
           SKU: <span className="font-semibold">{product.sku}</span>
         </h2>
       )}
 
-      {/* Product Rating */}
-      {product.rating && (
-        <div className="flex items-center gap-2 mt-3">
-          <div
-            className="flex items-center text-yellow-400"
-            aria-label={`Rating: ${product.rating}`}
-          >
-            {Array.from({ length: Math.floor(product.rating) }).map(
-              (_, idx) => (
-                <span key={idx}>&#9733;</span>
-              )
-            )}
-            {product.rating % 1 !== 0 && <span>&#9734;</span>}
-          </div>
-          <span className="text-sm text-gray-600">
-            {product.numReviews} review{product.numReviews === 1 ? "" : "s"}
-          </span>
+      {/* Reviews */}
+      {product.reviews && product.reviews.length > 0 ? (
+        <div className="mt-3">
+          <h2 className="text-lg font-semibold">Reviews:</h2>
+          {product.reviews.map((review, idx) => (
+            <div key={idx} className="mt-2">
+              {/* Star Rating */}
+              <div
+                className="flex items-center text-yellow-400"
+                aria-label={`Review Rating: ${review.rating}`}
+              >
+                {Array.from({ length: Math.floor(review.rating) }).map(
+                  (_, starIdx) => (
+                    <span key={starIdx}>&#9733;</span> // Filled star
+                  )
+                )}
+                {/* If there's a fractional part, render a half/empty star */}
+                {review.rating % 1 !== 0 && <span>&#9734;</span>}
+              </div>
+
+              {/* Review Text (if any) */}
+              {review.reviewText && (
+                <p className="text-gray-800 mt-1">"{review.reviewText}"</p>
+              )}
+            </div>
+          ))}
         </div>
+      ) : (
+        <p className="mt-3 text-gray-600">No reviews yet.</p>
       )}
 
       {/* Product Price */}
