@@ -25,9 +25,10 @@ interface ClientHomeProps {
     _id: string;
     title: string;
     description: string;
+    slug: string;
     price: number;
     imageUrl: string;
-    categories: string[];
+    category: string;
     tags?: string[];
     variations?: { type: string; imageUrl: string; sizes: any[] }[];
     reviews?: any[];
@@ -39,14 +40,12 @@ function adaptPosterToProductType(
   poster: ClientHomeProps["serverProducts"][0],
   categories: CategoryType[]
 ): ProductType {
-  const matchedCategory = categories.find(
-    (c) => c._id === poster.categories[0]
-  );
+  const matchedCategory = categories.find((c) => c._id === poster.category);
 
   return {
     _id: poster._id,
     name: poster.title,
-    slug: poster.title.toLowerCase().replace(/\s+/g, "-"),
+    slug: poster.slug,
     description: poster.description,
     category: matchedCategory || {
       _id: "",

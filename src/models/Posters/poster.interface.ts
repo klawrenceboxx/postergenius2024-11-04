@@ -26,7 +26,9 @@ export interface IPoster {
   slug: string; // Unique slug for the poster
   price: number; // Base price of the poster
   imageUrl: string;
-  categories: Types.ObjectId[]; // References to Category model
+  mockups?: string[];
+  // category: Types.ObjectId; // References to Category model
+  category: Types.ObjectId | null;
   tags?: string[]; // Optional tags for filtering
   variations?: IVariation[]; // Array of variations
   reviews?: IReview[]; // Array of reviews

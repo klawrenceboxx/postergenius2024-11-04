@@ -16,6 +16,7 @@ const CategorySchema = new Schema<ICategory>(
       lowercase: true, // Ensures consistent URLs
       index: true, // Optimized for searches
     },
+    parent: { type: mongoose.Types.ObjectId, ref: "Category", default: null },
   },
   { timestamps: true } // Adds createdAt and updatedAt fields
 );

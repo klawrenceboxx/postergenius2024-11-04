@@ -1,7 +1,7 @@
 // poster.schema.ts
 import mongoose, { Schema, Model, Document } from "mongoose";
 import { IPoster } from "./poster.interface";
-import CategoryModel from "../Category/category.schema";
+// import CategoryModel from "../Category/category.schema";
 
 // ✅ Define Standard Sizes & Prices
 const SIZE_OPTIONS = [
@@ -43,9 +43,8 @@ const PosterSchema = new Schema<IPoster>(
     description: { type: String, required: true },
     price: { type: Number, required: true },
     imageUrl: { type: String, required: true },
-    categories: [
-      { type: mongoose.Types.ObjectId, ref: CategoryModel, required: true },
-    ],
+    mockups: [{ type: String }],
+    category: { type: mongoose.Types.ObjectId, ref: "Category", default: null },
     tags: [{ type: String }],
     variations: [VariationSchema],
     sku: { type: String, required: true, unique: true }, // ✅ Add SKU

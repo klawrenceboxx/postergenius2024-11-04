@@ -18,12 +18,11 @@ async function seedPosters() {
 
     // Fetch categories for reference (these must be seeded first)
     const categories = await CategoryModel.find();
-
     if (categories.length === 0) {
       throw new Error("Categories not found. Please seed categories first.");
     }
 
-    // Define category variables
+    // Define category variables from the child categories (that will be used on posters)
     const superheroCategory = categories.find(
       (cat: any) => cat.slug === "superheroes"
     );
@@ -52,7 +51,7 @@ async function seedPosters() {
         price: 39.99,
         imageUrl:
           "https://storage.googleapis.com/digital_posters/kincaid1207_Thor_hammer_raised_summons_a_storm_lightning_crac_fcedce18-9702-4387-a06a-8d6c7662d50a_0-topaz-standard%20v2-900w.jpeg",
-        categories: superheroCategory ? [superheroCategory._id] : [],
+        category: superheroCategory ? superheroCategory._id : null,
         tags: ["marvel", "superhero", "action"],
         sku: "SUPR-THOR-BLUEWHT-01",
         slug: generateSlug(
@@ -77,6 +76,7 @@ async function seedPosters() {
         price: 39.99,
         imageUrl:
           "https://storage.googleapis.com/digital_posters/kincaid1207_A_silhouette_of_an_elephant_stands_against_a_suns_6ccd0e35-a9f6-4c36-bb13-97ed9ac6cb21_2-topaz-standard%20v2-900w.jpeg",
+        category: safariCategory ? safariCategory._id : null,
         tags: ["wildlife", "safari", "nature"],
         sku: "SAFR-ELEPH-REDORG-01",
         slug: generateSlug(
@@ -99,7 +99,7 @@ async function seedPosters() {
         price: 49.99,
         imageUrl:
           "https://storage.googleapis.com/digital_posters/kincaid1207_A_region_of_space_where_new_stars_are_born_bursti_28cb603b-df78-4959-836a-e4f764e127d3_1-topaz-low%20resolution%20v2-900w.jpeg",
-        categories: spaceCategory ? [spaceCategory._id] : [],
+        category: spaceCategory ? spaceCategory._id : null,
         tags: ["space", "galaxy", "stars"],
         sku: "SPCE-MILKY-BLACKPUR-01",
         slug: generateSlug(
