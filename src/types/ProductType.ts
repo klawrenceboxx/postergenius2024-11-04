@@ -3,7 +3,7 @@ import { Types } from "mongoose";
 import { IVariation, IReview } from "../models/Posters/poster.interface";
 
 export interface ProductType {
-  _id: string; // Product ID
+  _id?: Types.ObjectId; // Product ID
   title: string; // Product name/title
   description: string; // Description of the product
   slug: string; // URL-friendly slug

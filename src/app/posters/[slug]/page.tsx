@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import MainSwiper from "@/components/productPage/MainSwiper/Mainswiper";
 import Infos from "@/components/productPage/infos/Infos";
 import Link from "next/link";
+import { transformPosterToProduct } from "@/utils/transformPoster";
 
 interface PageProps {
   params: {
@@ -16,7 +17,6 @@ interface PageProps {
   };
 }
 
-// ✅ SEO Metadata for this page (App Router-friendly)
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = params;
 
@@ -56,9 +56,8 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-// ✅ Main Page Component
 export default async function Page({ params }: PageProps) {
-  const { slug } = await Promise.resolve(params);
+  const { slug } = params;
 
   // Connect to the DB and fetch poster data
   await db.connectDb();
@@ -77,23 +76,14 @@ export default async function Page({ params }: PageProps) {
     notFound(); // Trigger Next.js 404 if no poster is found
   }
 
-  console.log(poster);
-
-  const { title, description, price, mockups } = poster;
-
-  console.log(title);
-
-  console.log(mockups);
-
-  // const title = "Static Title for Testing";
+  // Transform the poster to include computed fields (e.g. finalPrice)
+  const product = transformPosterToProduct(poster);
 
   return (
     <>
       <Header />
-      {/* Home / Posters / {poster.title} */}
       <div className="px-6 md:px-10 py-6 max-w-7xl mx-auto">
         {/* Breadcrumb */}
-
         <div className="text-sm text-gray-600 mb-6">
           <Link href="/" className="hover:underline">
             Home
@@ -106,14 +96,10 @@ export default async function Page({ params }: PageProps) {
             )}
           {isPopulatedCategory(poster.category) && poster.category.name} /{" "}
           {poster.title}
-          {/* {poster.category?.parent?.name && (
-            <>{poster.category.parent.name} / </>
-          )}
-          {poster.category.name} / {poster.title}{" "} */}
         </div>
         <div className="w-full">
-          <MainSwiper images={mockups ?? []} />
-          <Infos product={poster} />
+          <MainSwiper images={product.mockups ?? []} />
+          <Infos product={product} />
         </div>
       </div>
       <Footer />

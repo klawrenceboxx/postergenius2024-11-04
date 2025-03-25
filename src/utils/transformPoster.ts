@@ -1,34 +1,22 @@
 // src/utils/transformPoster.ts
 
+import { Types } from "mongoose";
 import { IPoster } from "@/models/Posters/poster.interface";
 import { ProductType } from "@/types/ProductType";
 
 export function transformPosterToProduct(poster: IPoster): ProductType {
-  const price = poster.price;
-  const discount = poster.discount ?? 0;
-
-  // If a manual sale price is set, use that over calculated discount
-  const finalPrice = price - (price * discount) / 100;
-  const displayPrice = poster.salePrice ?? parseFloat(finalPrice.toFixed(2));
-  const savings = parseFloat((price - finalPrice).toFixed(2));
+  const discount = poster.discount || 0;
+  // If no salePrice is provided, default to poster.price
+  const salePrice = poster.salePrice ?? poster.price;
+  const finalPrice = poster.price - (poster.price * discount) / 100;
+  const savings = parseFloat((poster.price - finalPrice).toFixed(2));
 
   return {
-    _id: poster._id?.toString() ?? "",
-    title: poster.title,
-    description: poster.description,
-    slug: poster.slug,
-    price: poster.price,
-    salePrice: poster.salePrice,
+    ...poster,
+    salePrice,
     finalPrice,
+    discount,
+    // Optionally add computed savings if your ProductType requires it
     savings,
-    imageUrl: poster.imageUrl,
-    mockups: poster.mockups ?? [],
-    category: poster.category ?? null,
-    tags: poster.tags ?? [],
-    variations: poster.variations ?? [],
-    reviews: poster.reviews ?? [],
-    sku: poster.sku,
-    sold: poster.sold,
-    discount: poster.discount ?? 0,
   };
 }
