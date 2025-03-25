@@ -4,7 +4,7 @@ import Top from "./Top";
 import { CountryData } from "@/types/CountryData";
 
 type HeaderProps = {
-  country: CountryData;
+  country?: CountryData;
 };
 
 const Header: React.FC<HeaderProps> = ({ country }) => {

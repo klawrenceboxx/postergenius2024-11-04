@@ -11,7 +11,7 @@ import { CountryData } from "@/types/CountryData";
 import { useSession } from "next-auth/react";
 
 type HeaderProps = {
-  country: CountryData;
+  country?: CountryData;
 };
 
 const Top: React.FC<HeaderProps> = ({ country }) => {

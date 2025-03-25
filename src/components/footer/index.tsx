@@ -6,7 +6,7 @@ import Payment from "./Payment";
 import { CountryData } from "@/types/CountryData";
 
 type FooterProps = {
-  country: CountryData;
+  country?: CountryData;
 };
 
 const Footer: React.FC<FooterProps> = ({ country }) => {

@@ -22,7 +22,8 @@ export default async function Home() {
 
   try {
     const ipRes = await fetch(
-      "https://api.ipregistry.co/?key=YOUR_API_KEY" // Replace with your key
+      "https://api.ipregistry.co/?key=YOUR_API_KEY", // Replace with your key
+      { next: { revalidate: 86400 } }
     );
     if (ipRes.ok) {
       const data = await ipRes.json();

@@ -98,18 +98,20 @@ export default async function Page({ params }: PageProps) {
             Home
           </Link>
           <span> / </span>{" "}
-          {poster.category?.parent &&
+          {isPopulatedCategory(poster.category) &&
+            poster.category.parent &&
             isPopulatedCategory(poster.category.parent) && (
               <>{poster.category.parent.name} / </>
             )}
-          {poster.category.name} / {poster.title}
+          {isPopulatedCategory(poster.category) && poster.category.name} /{" "}
+          {poster.title}
           {/* {poster.category?.parent?.name && (
             <>{poster.category.parent.name} / </>
           )}
           {poster.category.name} / {poster.title}{" "} */}
         </div>
         <div className="w-full">
-          <MainSwiper images={mockups} />
+          <MainSwiper images={mockups ?? []} />
         </div>
       </div>
       <Footer />
