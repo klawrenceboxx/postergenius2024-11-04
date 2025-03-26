@@ -109,6 +109,7 @@ async function seedPosters() {
             type: "Vertical",
             imageUrl:
               "https://storage.googleapis.com/digital_posters/kincaid1207_A_silhouette_of_an_elephant_stands_against_a_suns_6ccd0e35-a9f6-4c36-bb13-97ed9ac6cb21_2-topaz-standard%20v2-900w.jpeg",
+            sizes: SIZE_OPTIONS,
           },
         ],
         reviews: [

@@ -8,6 +8,7 @@ import CartCheckout from "@/components/cart/CartCheckout";
 
 export default function CartPage() {
   const cartItems = useSelector((state: any) => state.cart.items);
+  console.log("🛒 Cart Items:", cartItems);
 
   return (
     <div className="p-4">
@@ -20,7 +21,10 @@ export default function CartPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="md:col-span-2 space-y-4">
             {cartItems.map((item: any) => (
-              <CartProduct key={item._id} product={item} />
+              <CartProduct
+                key={`${item._id}-${item.dimensions}`}
+                product={item}
+              />
             ))}
           </div>
           <div className="md:col-span-1">

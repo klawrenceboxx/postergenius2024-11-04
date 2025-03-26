@@ -8,6 +8,7 @@ interface CartItem {
   price: number;
   quantity: number;
   slug: string;
+  dimensions: string;
 }
 
 interface CartState {
@@ -23,16 +24,47 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<CartItem>) => {
-      state.items.push(action.payload); // Add an item to the cart
+      console.log("🛒 Checking existing items against:", action.payload);
+
+      const existingItem = state.items.find(
+        (item) =>
+          item._id === action.payload._id &&
+          item.dimensions === action.payload.dimensions
+      );
+
+      if (existingItem) {
+        console.log("✅ Found matching item. Increasing quantity.");
+        existingItem.quantity += action.payload.quantity;
+      } else {
+        console.log("🆕 New size. Adding to cart.");
+        state.items.push(action.payload);
+      }
     },
-    removeItem: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((item) => item._id !== action.payload); // Remove an item by ID
-    },
-    updateQuantity(
+    removeFromCart: (
       state,
-      action: PayloadAction<{ _id: string; quantity: number }>
+      action: PayloadAction<{ _id: string; dimensions: string }>
+    ) => {
+      state.items = state.items.filter(
+        (item) =>
+          !(
+            item._id === action.payload._id &&
+            item.dimensions === action.payload.dimensions
+          )
+      ); // Remove an item by ID
+    },
+    updateCartQuantity(
+      state,
+      action: PayloadAction<{
+        _id: string;
+        quantity: number;
+        dimensions: string;
+      }>
     ) {
-      const item = state.items.find((i) => i._id === action.payload._id);
+      const item = state.items.find(
+        (i) =>
+          i._id === action.payload._id &&
+          i.dimensions === action.payload.dimensions
+      );
       if (item) {
         item.quantity = action.payload.quantity;
       }
@@ -44,7 +76,7 @@ const cartSlice = createSlice({
 });
 
 // Export the actions to use them in components
-export const { addToCart, removeItem, updateQuantity, clearCart } =
+export const { addToCart, removeFromCart, updateCartQuantity, clearCart } =
   cartSlice.actions;
 
 // Export the reducer to add it to the store
