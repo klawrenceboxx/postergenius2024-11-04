@@ -12,7 +12,7 @@ export default function CartPage() {
     <div className="p-4">
       <CartHeader />
 
-      <h1 className="text-3xl font-bold mb-6">Shopping Cart</h1>
+      <h1 className="text-3xl font-bold mb-6 mt-3">Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <p className="text-gray-600">Your cart is empty.</p>
       ) : (
