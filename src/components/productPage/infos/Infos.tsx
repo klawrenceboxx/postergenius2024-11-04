@@ -1,22 +1,55 @@
+"use client";
+
 import { FC } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/lib/state/cartSlice";
 import { ProductType } from "@/types/ProductType";
 
 interface InfosProps {
   product: ProductType;
 }
 
+export const AddToCartButton: FC<{ product: ProductType }> = ({ product }) => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        _id: product._id || "",
+        title: product.title,
+        imageUrl: product.imageUrl,
+        price: product.finalPrice,
+        quantity: 1,
+        slug: product.slug,
+      })
+    );
+  };
+  return (
+    <button
+      onClick={handleAddToCart}
+      className="w-full bg-blue-500 text-white px-4 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 ease-in-out shadow hover:shadow-lg"
+    >
+      Add to Cart
+    </button>
+  );
+};
+
 const Infos: FC<InfosProps> = ({ product }) => {
   return (
-    <div className="p-4 bg-white rounded-lg shadow-lg">
+    <div className=" bg-white w-full md:w-1/2">
+      {/* <div className="p-4 bg-yellow-50 w-full md:w-1/2"> */}
+
       {/* Product Name */}
       <h1 className="text-2xl font-bold text-gray-900">{product.title}</h1>
 
-      {/* SKU */}
-      {product.sku && (
-        <h2 className="text-sm text-gray-600 mt-1">
-          SKU: <span className="font-semibold">{product.sku}</span>
-        </h2>
-      )}
+      {/* Description */}
+      <div>
+        <p className="text-gray-600 mt-2">
+          {product.description
+            ? product.description
+            : "No description available."}
+        </p>
+      </div>
 
       {/* Reviews */}
       {product.reviews && product.reviews.length > 0 ? (
@@ -70,6 +103,11 @@ const Infos: FC<InfosProps> = ({ product }) => {
         ) : (
           <p className="text-lg font-semibold">${product.price.toFixed(2)}</p>
         )}
+      </div>
+
+      {/* Add to Cart Button */}
+      <div className="mt-6">
+        <AddToCartButton product={product} />
       </div>
     </div>
   );

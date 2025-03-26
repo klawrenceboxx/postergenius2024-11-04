@@ -82,7 +82,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <Header />
-      <div className="px-6 md:px-10 py-6 max-w-7xl mx-auto">
+      <div className="bg-white px-6 md:px-10 py-6 max-w-7xl mx-auto">
         {/* Breadcrumb */}
         <div className="text-sm text-gray-600 mb-6">
           <Link href="/" className="hover:underline">
@@ -97,7 +97,7 @@ export default async function Page({ params }: PageProps) {
           {isPopulatedCategory(poster.category) && poster.category.name} /{" "}
           {poster.title}
         </div>
-        <div className="w-full">
+        <div className="flex flex-col md:flex-row w-full gap-10">
           <MainSwiper images={product.mockups ?? []} />
           <Infos product={product} />
         </div>

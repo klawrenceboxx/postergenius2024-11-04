@@ -8,7 +8,8 @@ import CategorySection from "@/components/CategorySection";
 import ProductCard from "@/components/ProductCard";
 import { Types } from "mongoose";
 
-import { ProductType } from "@/types/ProductType";
+import { IPoster } from "@/models/Posters/poster.interface";
+// import { ProductType } from "@/types/ProductType";
 import { CategoryType } from "@/types/CategoryType";
 import { transformPosterToProduct } from "@/utils/transformPoster";
 
@@ -21,7 +22,7 @@ type CountryData = {
 interface ClientHomeProps {
   serverSession?: any;
   serverCountry: CountryData;
-  serverProducts: ProductType[];
+  serverProducts: IPoster[];
 }
 
 export default function ClientHome({

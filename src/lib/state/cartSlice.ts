@@ -1,9 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Types } from "mongoose";
 
 interface CartItem {
-  id: string;
-  name: string;
+  _id: string;
+  title: string;
+  imageUrl: string;
+  price: number;
   quantity: number;
+  slug: string;
 }
 
 interface CartState {
@@ -18,11 +22,20 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<CartItem>) => {
+    addToCart: (state, action: PayloadAction<CartItem>) => {
       state.items.push(action.payload); // Add an item to the cart
     },
     removeItem: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((item) => item.id !== action.payload); // Remove an item by ID
+      state.items = state.items.filter((item) => item._id !== action.payload); // Remove an item by ID
+    },
+    updateQuantity(
+      state,
+      action: PayloadAction<{ _id: string; quantity: number }>
+    ) {
+      const item = state.items.find((i) => i._id === action.payload._id);
+      if (item) {
+        item.quantity = action.payload.quantity;
+      }
     },
     clearCart: (state) => {
       state.items = []; // Clear all items in the cart
@@ -31,7 +44,8 @@ const cartSlice = createSlice({
 });
 
 // Export the actions to use them in components
-export const { addItem, removeItem, clearCart } = cartSlice.actions;
+export const { addToCart, removeItem, updateQuantity, clearCart } =
+  cartSlice.actions;
 
 // Export the reducer to add it to the store
 export default cartSlice.reducer;

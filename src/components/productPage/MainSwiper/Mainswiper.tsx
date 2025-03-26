@@ -16,20 +16,20 @@ export default function MainSwiper({ images }: MainSwiperProps) {
   }
 
   return (
-    <div className="flex flex-col md:flex-row-reverse md:gap-6 w-full">
+    <div className="flex flex-col md:flex-row-reverse gap-4">
       {/* Main Image with Zoom */}
       <div className="flex-1 flex items-center justify-start">
         <Zoom>
           <img
             src={images[active]}
             alt={`Main product image`}
-            className="rounded-xl shadow-lg max-h-[600px] object-contain w-full max-w-[90%] md:max-w-full transition-opacity duration-300 ease-in-out animate-fadeIn"
+            className="rounded-lg shadow-lg max-h-[1000px] object-contain w-full max-w-[90%] md:max-w-full transition-opacity duration-300 ease-in-out animate-fadeIn"
           />
         </Zoom>
       </div>
 
       {/* Thumbnail List */}
-      <div className=" flex md:flex-col gap-4 mt-4 overflow-x-auto md:overflow-y-auto max-h-[600px] scrollbar-thin scrollbar-thumb-gray-400">
+      <div className=" flex md:flex-col gap-4 overflow-x-auto md:overflow-y-auto max-h-[600px] scrollbar-thin scrollbar-thumb-gray-400">
         {images.map((image, index) => (
           <button
             key={index}
