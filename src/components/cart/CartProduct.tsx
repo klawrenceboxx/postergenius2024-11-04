@@ -4,7 +4,7 @@ export default function CartProduct({ product }: { product: any }) {
   return (
     <div className="flex items-center p-4 border rounded-md">
       {/* Product Image */}
-      <div className="w-24 h-24 bg-gray-200 rounded-md overflow-hidden">
+      <div className="w-32 aspect-[2/3] bg-gray-200 rounded-sm overflow-hidden">
         <img
           src={product.imageUrl}
           alt={product.title}

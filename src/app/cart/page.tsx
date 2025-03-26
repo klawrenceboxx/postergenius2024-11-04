@@ -4,6 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CartProduct from "@/components/cart/CartProduct";
 import CartHeader from "@/components/cart/CartHeader";
+import CartCheckout from "@/components/cart/CartCheckout";
 
 export default function CartPage() {
   const cartItems = useSelector((state: any) => state.cart.items);
@@ -16,10 +17,15 @@ export default function CartPage() {
       {cartItems.length === 0 ? (
         <p className="text-gray-600">Your cart is empty.</p>
       ) : (
-        <div className="space-y-4">
-          {cartItems.map((item: any) => (
-            <CartProduct key={item._id} product={item} />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="md:col-span-2 space-y-4">
+            {cartItems.map((item: any) => (
+              <CartProduct key={item._id} product={item} />
+            ))}
+          </div>
+          <div className="md:col-span-1">
+            <CartCheckout subtotal={3} shipping={4} tax={5} />
+          </div>
         </div>
       )}
     </div>
