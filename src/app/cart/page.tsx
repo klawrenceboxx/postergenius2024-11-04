@@ -11,15 +11,17 @@ export default function CartPage() {
   console.log("🛒 Cart Items:", cartItems);
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-gray-50 min-h-screen">
       <CartHeader />
 
       <h1 className="text-3xl font-bold mb-6 mt-3">Shopping Cart</h1>
+
       {cartItems.length === 0 ? (
         <p className="text-gray-600">Your cart is empty.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-2 space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left: Cart Items */}
+          <div className="lg:col-span-2 space-y-4">
             {cartItems.map((item: any) => (
               <CartProduct
                 key={`${item._id}-${item.dimensions}`}
@@ -27,9 +29,8 @@ export default function CartPage() {
               />
             ))}
           </div>
-          <div className="md:col-span-1">
-            <CartCheckout subtotal={3} shipping={4} tax={5} />
-          </div>
+          {/* Right: Order Details */}
+          <CartCheckout subtotal={3} shipping={4} tax={5} />
         </div>
       )}
     </div>
