@@ -6,10 +6,11 @@ import { CategoryModel } from "@/models/Category";
 import { isPopulatedCategory } from "@/models/Category/category.schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import MainSwiper from "@/components/productPage/MainSwiper/Mainswiper";
-import Infos from "@/components/productPage/infos/Infos";
 import Link from "next/link";
 import { transformPosterToProduct } from "@/utils/transformPoster";
+import PosterMockupViewer from "@/components/productPage/MockupViewer/PosterMockupViewer";
+import Infos from "@/components/productPage/infos/Infos";
+import ProductPageClient from "./ProductPageClient";
 
 interface PageProps {
   params: {
@@ -19,17 +20,14 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = params;
-
   await db.connectDb();
   const poster = await PosterModel.findOne({ slug }).lean();
-
   if (!poster) {
     return {
       title: "Poster Not Found",
       description: "We couldn't find the poster you're looking for.",
     };
   }
-
   return {
     title: poster.title,
     description: poster.description,
@@ -58,31 +56,24 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function Page({ params }: PageProps) {
   const { slug } = params;
-
-  // Connect to the DB and fetch poster data
   await db.connectDb();
   const poster = await PosterModel.findOne({ slug })
     .populate({
       path: "category",
       model: CategoryModel,
-      populate: {
-        path: "parent",
-        model: CategoryModel,
-      },
+      populate: { path: "parent", model: CategoryModel },
     })
     .lean();
-
   if (!poster) {
-    notFound(); // Trigger Next.js 404 if no poster is found
+    notFound();
   }
-
-  // Transform the poster to include computed fields (e.g. finalPrice)
   const product = transformPosterToProduct(poster);
 
+  // Render a client wrapper for interactivity.
   return (
     <>
       <Header />
-      <div className="bg-white px-6 md:px-10 py-6 max-w-7xl mx-auto">
+      <div className="bg-white px-4 md:px-4 py-6 mx-auto">
         {/* Breadcrumb */}
         <div className="text-sm text-gray-600 mb-6">
           <Link href="/" className="hover:underline">
@@ -97,10 +88,8 @@ export default async function Page({ params }: PageProps) {
           {isPopulatedCategory(poster.category) && poster.category.name} /{" "}
           {poster.title}
         </div>
-        <div className="flex flex-col md:flex-row w-full gap-10">
-          <MainSwiper images={product.mockups ?? []} />
-          <Infos product={product} />
-        </div>
+        {/* ProductPage Client Wrapper defined inline */}
+        <ProductPageClient product={product} />
       </div>
       <Footer />
     </>
