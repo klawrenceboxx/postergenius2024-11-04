@@ -1,6 +1,11 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 interface CartCheckoutProps {
   subtotal: number;
@@ -57,16 +62,18 @@ const CartCheckout: React.FC<CartCheckoutProps> = ({
 
       {/* Discount Code Link */}
       <div className="mb-4">
-        <button
-          className="text-blue-600 text-sm underline"
-          onClick={() => {
-            // Add logic to show discount code input
-            console.log("Clicked discount code link");
-          }}
-        >
-          {" "}
-          I have a discount code or eGift Card
-        </button>
+        <Link href="/checkout">
+          <button
+            className="text-blue-600 text-sm underline"
+            onClick={() => {
+              // Add logic to show discount code input
+              console.log("Clicked discount code link");
+            }}
+          >
+            {" "}
+            I have a discount code or eGift Card
+          </button>
+        </Link>
       </div>
 
       {/* Checkout Button */}

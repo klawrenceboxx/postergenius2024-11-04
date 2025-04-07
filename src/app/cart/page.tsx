@@ -1,13 +1,29 @@
 "use client";
 
 import React from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import CartProduct from "@/components/cart/CartProduct";
 import CartHeader from "@/components/cart/CartHeader";
 import CartCheckout from "@/components/cart/CartCheckout";
 
 export default function CartPage() {
   const cartItems = useSelector((state: any) => state.cart.items);
+  const [subtotal, setSubtotal] = useState<number>(0);
+  const [shipping, setShipping] = useState<number>(5); // Example static shipping
+  const [tax, setTax] = useState<number>(0); // You can calculate later if needed
+  const [total, setTotal] = useState<number>(0);
+
+  // 💡 Update subtotal when cart items change
+  useEffect(() => {
+    const calculatedSubtotal = cartItems.reduce(
+      (sum: number, item: any) => sum + item.price * item.quantity,
+      0
+    );
+    setSubtotal(calculatedSubtotal);
+  }, [cartItems]);
+
   console.log("🛒 Cart Items:", cartItems);
 
   return (
@@ -30,7 +46,7 @@ export default function CartPage() {
             ))}
           </div>
           {/* Right: Order Details */}
-          <CartCheckout subtotal={3} shipping={4} tax={5} />
+          <CartCheckout subtotal={subtotal} shipping={shipping} tax={tax} />
         </div>
       )}
     </div>
