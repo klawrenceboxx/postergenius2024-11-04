@@ -7,6 +7,7 @@ export const makeStore = () => {
     reducer: {
       cart: cartReducer, // Add the cart slice
     },
+    devTools: process.env.NODE_ENV !== "production",
   });
 };
 

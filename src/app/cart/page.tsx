@@ -7,11 +7,12 @@ import { useDispatch } from "react-redux";
 import CartProduct from "@/components/cart/CartProduct";
 import CartHeader from "@/components/cart/CartHeader";
 import CartCheckout from "@/components/cart/CartCheckout";
+import PaymentMethods from "@/components/cart/paymentMethods";
 
 export default function CartPage() {
   const cartItems = useSelector((state: any) => state.cart.items);
   const [subtotal, setSubtotal] = useState<number>(0);
-  const [shipping, setShipping] = useState<number>(5); // Example static shipping
+  const [shipping, setShipping] = useState<number>(0); // Example static shipping
   const [tax, setTax] = useState<number>(0); // You can calculate later if needed
   const [total, setTotal] = useState<number>(0);
 
@@ -45,8 +46,13 @@ export default function CartPage() {
               />
             ))}
           </div>
-          {/* Right: Order Details */}
-          <CartCheckout subtotal={subtotal} shipping={shipping} tax={tax} />
+          <div>
+            {/* Right: Order Details */}
+            <CartCheckout subtotal={subtotal} shipping={shipping} tax={tax} />
+
+            {/* Payment Methods */}
+            <PaymentMethods />
+          </div>
         </div>
       )}
     </div>
