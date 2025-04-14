@@ -8,6 +8,9 @@ import Auth0Provider from "next-auth/providers/auth0";
 // import EmailProvider from "next-auth/providers/email";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../lib/mongodb";
+import userModel from "@/models/Users";
+import { IUser } from "@/models/Users";
+import bcrypt from "bcryptjs";
 
 export const options: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -44,28 +47,40 @@ export const options: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        //This is where you need to retrieve user data
-        // to verify with credentials
-        // Docs: Https://next-auth.js.org/configuration/providers/credentials
-        const user = { id: "42", name: "Dave", password: "nextauth" };
+        const user = (await userModel.findOne({
+          email: credentials?.username,
+        })) as IUser;
 
         if (
-          credentials?.username === user.name &&
-          credentials?.password === user.password
+          user &&
+          (await bcrypt.compare(credentials!.password, user.password))
         ) {
-          return user;
-        } else {
-          return null;
+          return {
+            id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+            image: user.image,
+          };
         }
+        return null;
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async session({ session, token }) {
+      // Inject the MongoDB _id into session.user.id
+      if (session?.user && token?.sub) {
+        session.user.id = token.sub;
+      }
+      return session;
+    },
+  },
   pages: {
     signIn: "/signin",
   },
 
-  session: {
-    strategy: "jwt",
-  },
   secret: process.env.JWT_SECRET,
 };

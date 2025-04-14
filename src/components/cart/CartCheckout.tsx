@@ -2,10 +2,10 @@
 
 import React from "react";
 import Link from "next/link";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { clearCart } from "@/lib/state/cartSlice";
+import { getOrCreateGuestIdClient } from "@/utils/guestClient"; // ✅
 
 interface CartCheckoutProps {
   subtotal: number;
@@ -18,7 +18,36 @@ const CartCheckout: React.FC<CartCheckoutProps> = ({
   shipping,
   tax,
 }) => {
+  const router = useRouter();
+  const cartItems = useSelector((state: any) => state.cart.items);
   const total = subtotal + shipping + tax;
+  const dispatch = useDispatch();
+
+  const handleCheckout = async () => {
+    const guestId = getOrCreateGuestIdClient();
+
+    try {
+      const res = await fetch("/api/cart/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: cartItems,
+          cartTotal: total,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to save cart");
+
+      console.log("🛒 Cart saved to MongoDB");
+
+      dispatch(clearCart());
+
+      // Redirect to checkout page
+      router.push("/checkout");
+    } catch (err) {
+      console.error("Checkout failed:", err);
+    }
+  };
 
   return (
     <div className="bg-white shadow p-6 rounded-lg">
@@ -79,9 +108,8 @@ const CartCheckout: React.FC<CartCheckoutProps> = ({
       {/* Checkout Button */}
       <button
         className="w-full text-lg font-semibold bg-blue-500 hover:bg-blue-600 text-white py-3 rounded transition duration-200"
-        onClick={() => {
-          console.log("Proceeding to checkout");
-        }}
+        onClick={handleCheckout}
+        disabled={cartItems.length === 0} // Disable if cart is empty
       >
         Checkout
       </button>
