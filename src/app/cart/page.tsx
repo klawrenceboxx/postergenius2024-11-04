@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import CartProduct from "@/components/cart/CartProduct";
 import CartHeader from "@/components/cart/CartHeader";
 import CartCheckout from "@/components/cart/CartCheckout";
-import PaymentMethods from "@/components/cart/paymentMethods";
+import PaymentMethods from "@/components/cart/PaymentMethods";
 
 export default function CartPage() {
   const cartItems = useSelector((state: any) => state.cart.items);
