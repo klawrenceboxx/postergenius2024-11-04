@@ -4,6 +4,8 @@ import db from "@/utils/db";
 import CartModel from "@/models/Cart";
 import UserModel from "@/models/Users";
 import ShippingSection from "@/components/checkout/ShippingSection";
+import CheckoutProducts from "@/components/checkout/CheckoutProducts";
+import CheckoutPaymentSelector from "@/components/checkout/CheckoutPayment";
 import CartHeader from "@/components/cart/CartHeader";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -39,12 +41,13 @@ export default async function CheckoutPage() {
         <ShippingSection user={user} cart={cart} />
         <div className="bg-white p-6 rounded shadow-md">
           {/* Placeholder for payment component (future step) */}
-          <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-          <p className="text-gray-600">Items: {cart.items.length}</p>
-          <p className="text-gray-600">Total: ${cart.cartTotal?.toFixed(2)}</p>
+          <CheckoutPaymentSelector cart={cart} />
+
           {/* Future: payment method selection, stripe logic, etc. */}
         </div>
+        <CheckoutProducts cart={cart} />
       </div>
+      <div className="container mx-auto px-4 py-8"></div>
     </>
   );
 }

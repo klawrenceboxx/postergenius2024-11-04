@@ -2,8 +2,7 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CartProduct from "@/components/cart/CartProduct";
 import CartHeader from "@/components/cart/CartHeader";
 import CartCheckout from "@/components/cart/CartCheckout";
