@@ -20,6 +20,17 @@ const shippingSchema = z.object({
   country: z.string().min(2, "Required"),
 });
 
+export interface ShippingValues {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  zipCode: string;
+  state: string;
+  country: string;
+}
+
 export interface ShippingSectionProps {
   user: IUser | null;
   cart: ICart;
@@ -39,9 +50,25 @@ const ShippingSection: FC<ShippingSectionProps> = ({ user }) => {
         country: "Canada",
       }}
       validationSchema={toFormikValidationSchema(shippingSchema)}
-      onSubmit={(values) => {
-        console.log("Shipping Info Submitted:", values);
-        // ⏳ Save to DB logic goes here
+      onSubmit={async (values, { setSubmitting, setErrors }) => {
+        try {
+          const res = await fetch("/api/user/save-address", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            setErrors({ city: data.error || "Could not save address." });
+          } else {
+          }
+        } catch (err) {
+          setErrors({ city: "Network error" });
+        } finally {
+          setSubmitting(false);
+        }
       }}
     >
       {({ values, errors, touched, handleChange, handleBlur }) => (

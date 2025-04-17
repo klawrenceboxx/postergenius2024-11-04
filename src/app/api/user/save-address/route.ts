@@ -1,3 +1,4 @@
+// src/app/api/user/save-address/route.ts
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
@@ -5,13 +6,11 @@ import db from "@/utils/db";
 import userModel from "@/models/Users";
 import { getGuestIdServer } from "@/utils/guest";
 
-// POST handler for saving a shipping address
 export async function POST(req: Request) {
   await db.connectDb();
 
   try {
     const body = await req.json();
-
     const {
       firstName,
       lastName,
@@ -24,7 +23,6 @@ export async function POST(req: Request) {
       country,
     } = body;
 
-    // Validate essential fields
     if (
       !firstName ||
       !lastName ||
@@ -62,27 +60,22 @@ export async function POST(req: Request) {
       zipCode,
       state,
       country,
-      active: true, // New address becomes active
     };
 
-    // If user is signed in
     if (userId) {
       const user = await userModel.findById(userId);
       if (!user) {
         return NextResponse.json({ error: "User not found." }, { status: 404 });
       }
 
-      // Deactivate other addresses
-      user.addresses.forEach((addr) => (addr.active = false));
-
-      // Push new address
-      user.addresses.push(newAddress);
+      // Overwrite the single address field
+      user.address = newAddress;
       await user.save();
 
       return NextResponse.json({ success: true, address: newAddress });
     }
 
-    // If guest — return address directly to be saved client-side or in another mechanism
+    // Guest path: return the address for client‑side handling
     return NextResponse.json({ success: true, guestAddress: newAddress });
   } catch (error) {
     console.error("Error saving address:", error);

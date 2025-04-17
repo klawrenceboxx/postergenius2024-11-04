@@ -1,6 +1,18 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { string } from "yup";
 
+export interface Address {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  zipCode: string;
+  state: string;
+  country: string;
+}
+
 export interface IUser extends Document {
   _id: string;
   name: string;
@@ -10,18 +22,7 @@ export interface IUser extends Document {
   image: string;
   emailVerified: boolean;
   paymentMethod: string;
-  addresses: {
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    address1: string;
-    address2?: string;
-    city: string;
-    zipCode: string;
-    state: string;
-    country: string;
-    active: boolean;
-  }[];
+  address: Address;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -60,20 +61,17 @@ const UserSchema = new Schema<IUser>(
       type: String,
       default: "",
     },
-    addresses: [
-      {
-        firstName: { type: String, required: true },
-        lastName: { type: String, required: true },
-        phoneNumber: { type: String, required: true },
-        address1: { type: String, required: true },
-        address2: { type: String, require: true },
-        city: { type: String, required: true },
-        zipCode: { type: String, required: true },
-        state: { type: String, required: true },
-        country: { type: String, required: true },
-        active: { type: Boolean, default: false },
-      },
-    ],
+    address: {
+      firstName: { type: String, required: true },
+      lastName: { type: String, required: true },
+      phoneNumber: { type: String, required: true },
+      address1: { type: String, required: true },
+      address2: { type: String },
+      city: { type: String, required: true },
+      zipCode: { type: String, required: true },
+      state: { type: String, required: true },
+      country: { type: String, required: true },
+    },
   },
   { timestamps: true }
 );

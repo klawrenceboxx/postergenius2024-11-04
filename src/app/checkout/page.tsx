@@ -6,6 +6,7 @@ import UserModel from "@/models/Users";
 import ShippingSection from "@/components/checkout/ShippingSection";
 import CheckoutProducts from "@/components/checkout/CheckoutProducts";
 import CheckoutPaymentSelector from "@/components/checkout/CheckoutPayment";
+import CheckoutSummary from "@/components/checkout/CheckoutSummary";
 import CartHeader from "@/components/cart/CartHeader";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -19,8 +20,11 @@ export default async function CheckoutPage() {
   let cart = null;
 
   if (session?.user?.id) {
-    user = await UserModel.findById(session.user.id).lean();
-    cart = await CartModel.findOne({ user: session.user.id }).lean();
+    const userDoc = await UserModel.findById(session.user.id).lean();
+    const cartDoc = await CartModel.findOne({ user: session.user.id }).lean();
+
+    if (userDoc) user = JSON.parse(JSON.stringify(userDoc));
+    if (cartDoc) cart = JSON.parse(JSON.stringify(cartDoc));
   } else {
     const guestId = (await cookies()).get("guestId")?.value;
     if (!guestId) redirect("/cart");
@@ -44,6 +48,7 @@ export default async function CheckoutPage() {
           <CheckoutPaymentSelector cart={cart} />
 
           {/* Future: payment method selection, stripe logic, etc. */}
+          <CheckoutSummary cart={cart} user={user} paymentMethod="stripe" />
         </div>
         <CheckoutProducts cart={cart} />
       </div>
