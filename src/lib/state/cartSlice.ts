@@ -1,15 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Types } from "mongoose";
-
-interface CartItem {
-  _id: string;
-  title: string;
-  imageUrl: string;
-  price: number;
-  quantity: number;
-  slug: string;
-  dimensions: string;
-}
+import { CartItem } from "@/types/cart"; // adjust if path differs
+// import { set, Types } from "mongoose";
 
 interface CartState {
   items: CartItem[];
@@ -72,12 +63,21 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = []; // Clear all items in the cart
     },
+
+    setCart: (state, action: PayloadAction<CartItem[]>) => {
+      state.items = action.payload;
+    },
   },
 });
 
 // Export the actions to use them in components
-export const { addToCart, removeFromCart, updateCartQuantity, clearCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  updateCartQuantity,
+  clearCart,
+  setCart,
+} = cartSlice.actions;
 
 // Export the reducer to add it to the store
 export default cartSlice.reducer;
