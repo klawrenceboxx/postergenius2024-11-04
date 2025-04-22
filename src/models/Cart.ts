@@ -1,14 +1,5 @@
 import mongoose, { Schema, Document, Types, Model } from "mongoose";
-
-interface CartItem {
-  _id: string;
-  title: string;
-  imageUrl: string;
-  price: number;
-  quantity: number;
-  slug: string;
-  dimensions: string;
-}
+import { CartItem } from "@/types/cart";
 
 export interface ICart extends Document {
   user?: Types.ObjectId;

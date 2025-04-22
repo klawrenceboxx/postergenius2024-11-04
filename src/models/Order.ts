@@ -1,14 +1,6 @@
 import mongoose, { Schema, Document, Types, Model } from "mongoose";
-
-interface OrderItem {
-  _id: string;
-  title: string;
-  imageUrl: string;
-  price: number;
-  quantity: number;
-  slug: string;
-  dimensions: string;
-}
+import { Address } from "@/types/address";
+import { OrderItem } from "@/types/orderItem";
 
 interface PaymentResult {
   id: string;
@@ -16,24 +8,12 @@ interface PaymentResult {
   email: string;
 }
 
-interface ShippingAddress {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  address1: string;
-  address2?: string;
-  city: string;
-  zipCode: string;
-  state: string;
-  country: string;
-}
-
 export interface IOrder extends Document {
   user?: Types.ObjectId;
   guestId?: string;
   items: OrderItem[];
   orderTotal: number;
-  shippingAddress: ShippingAddress;
+  shippingAddress: Address;
   paymentMethod: string;
   paymentResult?: PaymentResult;
   shippingPrice: number;
@@ -64,7 +44,7 @@ const OrderItemSchema = new Schema<OrderItem>(
   { _id: false }
 );
 
-const ShippingAddressSchema = new Schema<ShippingAddress>(
+const ShippingAddressSchema = new Schema<Address>(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
