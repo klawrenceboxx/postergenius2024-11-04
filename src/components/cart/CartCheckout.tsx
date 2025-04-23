@@ -21,7 +21,6 @@ const CartCheckout: React.FC<CartCheckoutProps> = ({
   const router = useRouter();
   const cartItems = useSelector((state: any) => state.cart.items);
   const total = subtotal + shipping + tax;
-  const dispatch = useDispatch();
 
   const handleCheckout = async () => {
     const guestId = getOrCreateGuestIdClient();
@@ -39,8 +38,6 @@ const CartCheckout: React.FC<CartCheckoutProps> = ({
       if (!res.ok) throw new Error("Failed to save cart");
 
       console.log("🛒 Cart saved to MongoDB");
-
-      dispatch(clearCart());
 
       // Redirect to checkout page
       router.push("/checkout");

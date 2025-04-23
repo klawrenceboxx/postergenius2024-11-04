@@ -11,6 +11,7 @@ interface PaymentResult {
 export interface IOrder extends Document {
   user?: Types.ObjectId;
   guestId?: string;
+  email: string;
   items: OrderItem[];
   orderTotal: number;
   shippingAddress: Address;
@@ -72,6 +73,7 @@ const OrderSchema = new Schema<IOrder>(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: false },
     guestId: { type: String, required: false },
+    email: { type: String, required: true },
     items: [OrderItemSchema],
     orderTotal: { type: Number, required: true },
     shippingAddress: { type: ShippingAddressSchema, required: true },

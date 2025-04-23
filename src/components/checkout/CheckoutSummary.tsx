@@ -1,5 +1,7 @@
 "use client";
 
+import { useDispatch } from "react-redux";
+import { clearCart } from "@/lib/state/cartSlice";
 import { FC, useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import { z } from "zod";
@@ -29,6 +31,7 @@ const Summary: FC<SummaryProps> = ({ cart, user, paymentMethod }) => {
     null
   );
   const [orderError, setOrderError] = useState("");
+  const dispatch = useDispatch();
 
   const applyCouponHandler = async (values: { code: string }) => {
     try {
@@ -83,6 +86,8 @@ const Summary: FC<SummaryProps> = ({ cart, user, paymentMethod }) => {
         setOrderError(data.error || "Could not place order.");
         return;
       }
+
+      dispatch(clearCart());
 
       router.push(`/order/${data.orderId}`);
     } catch (err) {

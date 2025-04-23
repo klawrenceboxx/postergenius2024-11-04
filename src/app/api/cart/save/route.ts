@@ -1,4 +1,5 @@
 // saveCart function
+// On "continue to checkout" -- saves current redux cart to the database -- cart page onClick
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
