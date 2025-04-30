@@ -1,5 +1,3 @@
-// saveCart function
-// On "continue to checkout" -- saves current redux cart to the database -- cart page onClick
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
@@ -15,29 +13,32 @@ export async function POST(req: Request) {
     const { items, cartTotal } = body;
 
     if (!items || !Array.isArray(items)) {
+      console.warn("❌ Invalid cart data received:", body);
       return NextResponse.json(
         { error: "Invalid cart data." },
         { status: 400 }
       );
     }
 
-    // Try to get session user
     const session = await getServerSession(options);
     const userId = session?.user?.id || null;
+    const guestId = userId ? null : getGuestIdServer();
 
-    // Or try to get guest ID
-    const guestId = userId ? null : await getGuestIdServer();
+    console.log("🔐 Session user ID:", userId);
+    console.log("👤 Guest ID from cookie:", guestId);
+
     if (!userId && !guestId) {
+      console.warn("❌ Neither user ID nor guest ID found.");
       return NextResponse.json(
         { error: "No user or guest ID found." },
         { status: 400 }
       );
     }
 
-    // Remove any existing cart (per user or guest)
+    // 🧹 Clean up existing cart
     await CartModel.findOneAndDelete(userId ? { user: userId } : { guestId });
 
-    // Create a new cart
+    // 💾 Create new cart
     const newCart = new CartModel({
       user: userId || undefined,
       guestId: guestId || undefined,
@@ -47,9 +48,16 @@ export async function POST(req: Request) {
 
     await newCart.save();
 
+    console.log("✅ Saved cart to DB:", {
+      userId,
+      guestId,
+      itemCount: items.length,
+      cartTotal,
+    });
+
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error saving cart:", error);
+    console.error("❌ Error saving cart:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

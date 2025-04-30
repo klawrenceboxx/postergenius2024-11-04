@@ -19,7 +19,7 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await Promise.resolve(params);
   await db.connectDb();
   const poster = await PosterModel.findOne({ slug }).lean();
   if (!poster) {
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function Page({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await Promise.resolve(params);
   await db.connectDb();
   const poster = await PosterModel.findOne({ slug })
     .populate({

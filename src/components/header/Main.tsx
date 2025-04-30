@@ -5,11 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { RiSearch2Line } from "react-icons/ri";
 import { FaOpencart } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store"; // if you have this
 
 const Main: React.FC = () => {
-  // Using useSelector to retrieve the cart state from Redux
-  const { cart } = useSelector((state: any) => state);
+  const [isClient, setIsClient] = useState(false);
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <div className="bg-gray-100 py-4 shadow-sm">
@@ -49,7 +55,7 @@ const Main: React.FC = () => {
         >
           <FaOpencart size={24} />
           <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-semibold w-5 h-5 rounded-full flex items-center justify-center">
-            {cart.length}
+            {cartItems.length}
           </span>
         </Link>
       </div>
