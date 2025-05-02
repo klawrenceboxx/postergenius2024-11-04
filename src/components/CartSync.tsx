@@ -9,6 +9,7 @@ import {
   loadCartFromLocalStorage,
 } from "@/utils/cartStorage";
 import { useSession } from "next-auth/react";
+import { getOrCreateGuestIdClient } from "@/utils/guestClient"; // ✅
 
 const CartSync = () => {
   const dispatch = useDispatch();
@@ -23,8 +24,15 @@ const CartSync = () => {
   useEffect(() => {
     const storedCart = loadCartFromLocalStorage();
     dispatch(setCart(storedCart));
+
+    // ✅ Ensure guestId is initialized
+    if (!session?.user?.id) {
+      const guestId = getOrCreateGuestIdClient();
+      console.log("✅ guestId ensured:", guestId);
+    }
+
     setHasMounted(true);
-  }, [dispatch]);
+  }, [dispatch, session?.user?.id]);
 
   // --------------------------
   // 2. Save Redux cart to localStorage anytime it changes (for guests)

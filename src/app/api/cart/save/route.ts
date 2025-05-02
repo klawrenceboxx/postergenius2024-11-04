@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     const session = await getServerSession(options);
     const userId = session?.user?.id || null;
-    const guestId = userId ? null : getGuestIdServer();
+    const guestId = userId ? null : await getGuestIdServer();
 
     console.log("🔐 Session user ID:", userId);
     console.log("👤 Guest ID from cookie:", guestId);
