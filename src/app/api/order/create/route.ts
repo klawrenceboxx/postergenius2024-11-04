@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
       paymentMethod,
       orderTotal: total,
       isPaid: false,
-      status: "Not processed",
+      status: "Not Processed",
     });
 
     await newOrder.save();
