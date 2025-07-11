@@ -62,12 +62,20 @@ const Summary: FC<SummaryProps> = ({ cart, user, paymentMethod }) => {
 
   const placeOrderHandler = async () => {
     if (!paymentMethod) {
+      console.error("Missing: paymentMethod");
       setOrderError("Please choose a payment method.");
       return;
     }
 
     try {
       const guestId = getOrCreateGuestIdClient();
+
+      console.log({
+        items: cart.items,
+        shippingAddress: user?.address,
+        paymentMethod,
+        total: totalAfterDiscount ?? cart.cartTotal,
+      });
 
       const res = await fetch("/api/order/create", {
         method: "POST",

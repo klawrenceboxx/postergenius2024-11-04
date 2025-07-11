@@ -18,6 +18,7 @@ const shippingSchema = z.object({
   zipCode: z.string().min(2, "Required"),
   state: z.string().min(2, "Required"),
   country: z.string().min(2, "Required"),
+  phoneNumber: z.string().min(7, "Required"),
 });
 
 export interface ShippingValues {
@@ -48,6 +49,7 @@ const ShippingSection: FC<ShippingSectionProps> = ({ user }) => {
         zipCode: "",
         state: "",
         country: "Canada",
+        phoneNumber: "",
       }}
       validationSchema={toFormikValidationSchema(shippingSchema)}
       onSubmit={async (values, { setSubmitting, setErrors }) => {
@@ -85,6 +87,7 @@ const ShippingSection: FC<ShippingSectionProps> = ({ user }) => {
 
           <ShippingInput name="state" label="State / Province" />
           <CountrySelect name="country" label="Country" />
+          <ShippingInput name="phoneNumber" label="Phone number" />
 
           <button
             type="submit"

@@ -45,14 +45,21 @@ const CheckoutPayment: FC<CheckoutPaymentProps> = ({ cart }) => {
 
               {method.images && (
                 <div className="flex gap-2">
-                  {method.images.map((src, i) => (
-                    <img
-                      key={i}
-                      src={src}
-                      alt={method.name}
-                      className="w-10 h-auto"
-                    />
-                  ))}
+                  {method.images.map((imgName, i) => {
+                    const imagePath = `/payments/${imgName}`;
+                    return (
+                      <img
+                        key={i}
+                        src={imagePath}
+                        alt={method.name}
+                        className="w-10 h-auto"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "/payments/default.svg"; // fallback image you should include
+                        }}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </div>

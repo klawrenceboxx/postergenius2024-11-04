@@ -18,7 +18,7 @@ const CartSync = () => {
   const { data: session } = useSession();
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
-  // --------------------------
+  // --------------------------\\
   // 1. Load cart from localStorage on first mount (before login)
   // --------------------------
   useEffect(() => {
