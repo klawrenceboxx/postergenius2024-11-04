@@ -1,8 +1,8 @@
 "use client";
 
 import React, { startTransition, useEffect, useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/Headerr";
+import Footer from "@/components/Footerr";
 import LoginInput from "@/components/inputs/LoginInput";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
