@@ -1,4 +1,4 @@
-import Ad from "./Add";
+import Ad from "./Ad";
 import Main from "./Main";
 import Top from "./Top";
 import { CountryData } from "@/types/CountryData";

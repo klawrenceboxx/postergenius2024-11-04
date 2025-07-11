@@ -1,7 +1,7 @@
 import React from "react";
-import Ad from "@/components/Headerr/Add";
-import Top from "@/components/Headerr/Top";
-import Main from "@/components/Headerr/Main";
+import Ad from "@/components/Header/Ad";
+import Top from "@/components/Header/Top";
+import Main from "@/components/Header/Main";
 
 const CartHeader: React.FC = () => {
   return (
