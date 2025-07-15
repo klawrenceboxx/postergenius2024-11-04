@@ -23,10 +23,20 @@ const connectDb = async (): Promise<void> => {
     await mongoose.disconnect();
   }
 
-  const db = await mongoose.connect(process.env.MONGODB_URL || "");
+  const uri = process.env.MONGODB_URL;
 
-  connection.isConnected = db.connections[0].readyState;
-  console.log("New connection established with the database.");
+  if (!uri) {
+    console.error("MONGODB_URL is not defined. Skipping database connection.");
+    return;
+  }
+
+  try {
+    const db = await mongoose.connect(uri);
+    connection.isConnected = db.connections[0].readyState;
+    console.log("New connection established with the database.");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+  }
 };
 
 const disconnectDb = async (): Promise<void> => {

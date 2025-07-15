@@ -19,18 +19,24 @@ export default async function CheckoutPage() {
   let user = null;
   let cart = null;
 
-  if (session?.user?.id) {
-    const userDoc = await UserModel.findById(session.user.id).lean();
-    const cartDoc = await CartModel.findOne({ user: session.user.id }).lean();
+  if (process.env.MONGODB_URL) {
+    try {
+      if (session?.user?.id) {
+        const userDoc = await UserModel.findById(session.user.id).lean();
+        const cartDoc = await CartModel.findOne({ user: session.user.id }).lean();
 
-    if (userDoc) user = JSON.parse(JSON.stringify(userDoc));
-    if (cartDoc) cart = JSON.parse(JSON.stringify(cartDoc));
-  } else {
-    const guestId = (await cookies()).get("guestId")?.value;
-    if (!guestId) redirect("/cart");
-    cart = await CartModel.findOne({ guestId }).lean();
-    const cartDoc = await CartModel.findOne({ guestId });
-    if (cartDoc) cart = JSON.parse(JSON.stringify(cartDoc));
+        if (userDoc) user = JSON.parse(JSON.stringify(userDoc));
+        if (cartDoc) cart = JSON.parse(JSON.stringify(cartDoc));
+      } else {
+        const guestId = (await cookies()).get("guestId")?.value;
+        if (!guestId) redirect("/cart");
+        cart = await CartModel.findOne({ guestId }).lean();
+        const cartDoc = await CartModel.findOne({ guestId });
+        if (cartDoc) cart = JSON.parse(JSON.stringify(cartDoc));
+      }
+    } catch (err) {
+      console.error("Error fetching checkout data", err);
+    }
   }
 
   if (!cart || !cart.items || cart.items.length === 0) {

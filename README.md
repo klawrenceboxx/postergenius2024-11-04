@@ -14,6 +14,16 @@ pnpm dev
 bun dev
 ```
 
+### Environment variables
+
+Create a `.env` file at the project root with your MongoDB connection string:
+
+```bash
+cp .env.example .env
+```
+
+Update `MONGODB_URL` in `.env` with your database URI before running `next build` or starting the server.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

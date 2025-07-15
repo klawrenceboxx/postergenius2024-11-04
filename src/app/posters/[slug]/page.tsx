@@ -21,7 +21,14 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await Promise.resolve(params);
   await db.connectDb();
-  const poster = await PosterModel.findOne({ slug }).lean();
+  let poster = null;
+  if (process.env.MONGODB_URL) {
+    try {
+      poster = await PosterModel.findOne({ slug }).lean();
+    } catch (err) {
+      console.error("Error fetching poster for metadata", err);
+    }
+  }
   if (!poster) {
     return {
       title: "Poster Not Found",
@@ -57,13 +64,20 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function Page({ params }: PageProps) {
   const { slug } = await Promise.resolve(params);
   await db.connectDb();
-  const poster = await PosterModel.findOne({ slug })
-    .populate({
-      path: "category",
-      model: CategoryModel,
-      populate: { path: "parent", model: CategoryModel },
-    })
-    .lean();
+  let poster = null;
+  if (process.env.MONGODB_URL) {
+    try {
+      poster = await PosterModel.findOne({ slug })
+        .populate({
+          path: "category",
+          model: CategoryModel,
+          populate: { path: "parent", model: CategoryModel },
+        })
+        .lean();
+    } catch (err) {
+      console.error("Error fetching poster", err);
+    }
+  }
   if (!poster) {
     notFound();
   }

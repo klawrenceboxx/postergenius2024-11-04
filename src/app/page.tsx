@@ -7,7 +7,14 @@ import ClientHome from "@/app/clientHome";
 export default async function Home() {
   // 1. Connect to the DB and fetch poster data
   await db.connectDb();
-  const rawPosters = await PosterModel.find().sort({ createdAt: -1 }).lean();
+  let rawPosters = [] as any[];
+  if (process.env.MONGODB_URL) {
+    try {
+      rawPosters = await PosterModel.find().sort({ createdAt: -1 }).lean();
+    } catch (err) {
+      console.error("Error fetching posters from MongoDB", err);
+    }
+  }
   await db.disconnectDb();
 
   // Convert any Mongoose objects (like ObjectIds) into plain objects
