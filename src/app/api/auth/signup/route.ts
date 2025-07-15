@@ -50,10 +50,7 @@ export async function POST(req: NextRequest) {
 
     await newUser.save();
 
-    const userId =
-      newUser._id instanceof mongoose.Types.ObjectId
-        ? newUser._id.toString()
-        : String(newUser._id);
+    const userId = newUser._id.toString();
 
     // Generate activation token
     const activationToken = createActivationToken({

@@ -10,6 +10,19 @@ import { BiLeftArrowAlt } from "react-icons/bi";
 import Link from "next/link";
 import Button1 from "@/components/buttons/Button1";
 import { getProviders, signIn, ClientSafeProvider } from "next-auth/react";
+import { countries } from "../data/countries";
+
+type CountryData = {
+  name: string;
+  region: string;
+  city: string;
+};
+
+const country: CountryData = {
+  name: "Canada",
+  region: "Americas", // Or whatever is appropriate
+  city: "",
+};
 
 interface LoginValues {
   login_email: string;
@@ -93,7 +106,9 @@ export default function signin() {
 
   return (
     <>
-      <Header country="Canada" />
+      // You need to import or define a CountryData object for Canada // Example
+      assuming you have a countries data file or similar:
+      <Header country={country} />
       <div className="flex items-center justify-center mt-10 ">
         {/* Back to Store Section */}
         <div className="w-full max-w-md mb-6 px-4">
@@ -266,7 +281,7 @@ export default function signin() {
           <div className="w-full max-w-md"></div>
         </div>
       </div>
-      <Footer country="Canada" />
+      <Footer country={country} />
     </>
   );
 }
